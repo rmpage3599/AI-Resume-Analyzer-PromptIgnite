@@ -1,19 +1,29 @@
 import os
+import sys
 import io
-from fastapi import FastAPI, File, UploadFile, Form, HTTPException
+
+# Ensure backend root is always on sys.path
+sys.path.insert(0, os.path.dirname(__file__))
+
+from fastapi import FastAPI, File, UploadFile, Form, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
 from utils.parser import extract_text_from_pdf, extract_text_from_docx
 from utils.matcher import load_jobs, get_job_by_id
 from utils.ai_engine import analyze_resume_pipeline
-from database.supabase_client import is_supabase_configured, save_analysis_to_supabase
+from database.db_manager import (
+    save_analysis,
+    get_history,
+    get_history_detail,
+    is_supabase_configured
+)
 
 # Initialize FastAPI App
 app = FastAPI(
     title="AI Resume Analyzer API",
     description="Backend API for AI-assisted resume parsing, job comparison, and ATS score evaluation.",
-    version="1.0.0"
+    version="1.1.0"
 )
 
 # Configure CORS for Next.js frontend (http://localhost:3000)
@@ -29,10 +39,12 @@ MAX_FILE_SIZE = 5 * 1024 * 1024  # 5 MB Limit
 
 @app.get("/api/health")
 def health_check():
-    """Health check endpoint to verify backend service and database status."""
+    """Health check endpoint verifying backend status and active database engine."""
+    backend_type = "supabase" if is_supabase_configured() else "sqlite"
     return {
         "status": "healthy",
         "service": "AI Resume Analyzer Backend",
+        "database_backend": backend_type,
         "supabase_configured": is_supabase_configured()
     }
 
@@ -53,7 +65,8 @@ async def analyze_resume(
     - resume: PDF or DOCX file
     - jobRole: selected job role ID
     
-    Returns structured JSON matching Section 12 specification.
+    Returns structured JSON matching Section 12 specification,
+    and automatically saves the result into the database.
     """
     # 1. Validate File Existence and Extension
     filename = resume.filename or ""
@@ -113,17 +126,47 @@ async def analyze_resume(
             detail=f"Error analyzing resume: {str(e)}"
         )
 
-    # 6. Optional: Persist to Supabase if credentials are provided (Phase 2 bridge)
-    if is_supabase_configured():
-        save_analysis_to_supabase(
-            file_name=filename,
-            raw_text=extracted_text,
-            analysis_result=analysis_result,
-            job_role_id=jobRole
-        )
+    # 6. Automatic Persistence (Supabase Cloud if configured, SQLite out-of-the-box)
+    candidate_name = analysis_result.get("candidate", {}).get("name", "Candidate")
+    save_result = save_analysis(
+        file_name=filename,
+        candidate_name=candidate_name,
+        raw_text=extracted_text,
+        job_role_id=jobRole,
+        analysis_result=analysis_result
+    )
+
+    # Attach storage metadata to result
+    analysis_result["id"] = save_result.get("id")
+    analysis_result["databaseBackend"] = save_result.get("backend")
 
     # 7. Return Section 12 compliant response
     return analysis_result
+
+@app.get("/api/history")
+def get_analysis_history(limit: int = Query(20, ge=1, le=100)):
+    """
+    Get past candidate evaluations history from the database.
+    Used to populate the 'History / Past Analyses' tab in the frontend.
+    """
+    records = get_history(limit=limit)
+    return {
+        "total": len(records),
+        "history": records
+    }
+
+@app.get("/api/history/{record_id}")
+def get_analysis_by_id(record_id: str):
+    """
+    Retrieve full analysis details for a specific past evaluation by its ID.
+    """
+    detail = get_history_detail(record_id)
+    if not detail:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Analysis record with ID '{record_id}' not found."
+        )
+    return detail
 
 if __name__ == "__main__":
     import uvicorn

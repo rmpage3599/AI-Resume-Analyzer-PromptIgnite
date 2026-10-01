@@ -19,4 +19,7 @@ dist/
 .vscode/
 .idea/
 *.log
+*.db
+*.sqlite3
+*.sqlite
 .DS_Store

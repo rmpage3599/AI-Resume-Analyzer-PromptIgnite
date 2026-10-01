@@ -10,12 +10,13 @@ This document contains everything needed for the **Frontend Integrating Agent** 
 - **Interactive Swagger Documentation:** [http://localhost:8000/docs](http://localhost:8000/docs)
 - **OpenAPI Schema:** `http://localhost:8000/openapi.json`
 - **CORS:** Pre-configured and enabled for `http://localhost:3000` and `http://127.0.0.1:3000`.
+- **Database Engine:** Dual Engine (Supabase Cloud + Local SQLite Fallback out-of-the-box).
 - **Max File Size:** `5 MB`
 - **Accepted File Types:** `.pdf`, `.docx`
 
 ---
 
-## 🧬 2. Ready-to-Use TypeScript Definitions
+## 🧬 2. Complete TypeScript Definitions
 
 Place these type definitions in `frontend/ai-resume-analyzer/types/api.ts` (or `types.ts`):
 
@@ -45,6 +46,8 @@ export interface JobRole {
 }
 
 export interface AnalysisResult {
+  id: string; // Database record ID
+  databaseBackend: "supabase" | "sqlite";
   candidate: CandidateInfo;
   skills: string[];
   education: EducationEntry[];
@@ -53,11 +56,29 @@ export interface AnalysisResult {
   missingSkills: string[];
   matchScore: number; // Integer percentage from 0 to 100
   suggestions: string[];
+  createdAt?: string;
+  fileName?: string;
+  jobRoleId?: string;
+}
+
+export interface HistoryItem {
+  id: string;
+  candidateName: string;
+  fileName: string;
+  jobRoleId: string;
+  matchScore: number;
+  createdAt: string;
+}
+
+export interface HistoryResponse {
+  total: number;
+  history: HistoryItem[];
 }
 
 export interface HealthResponse {
   status: "healthy";
   service: string;
+  database_backend: "supabase" | "sqlite";
   supabase_configured: boolean;
 }
 
@@ -71,185 +92,90 @@ export interface ApiErrorResponse {
 ## 🔌 3. API Endpoints Specification
 
 ### 3.1. Health Check
-
-Used to verify the backend is online and check whether Phase 2 Supabase is active.
-
 - **Method:** `GET`
 - **Endpoint:** `/api/health`
-- **Headers:** None
-- **Request Body:** None
-
-#### Response (200 OK):
+- **Response (200 OK):**
 ```json
 {
   "status": "healthy",
   "service": "AI Resume Analyzer Backend",
+  "database_backend": "sqlite",
   "supabase_configured": false
 }
 ```
 
 ---
 
-### 3.2. Get Predefined Job Roles
-
-Used to populate the **Job Role Selector** dropdown in the UI.
-
+### 3.2. Get Predefined Job Roles (Dropdown)
 - **Method:** `GET`
 - **Endpoint:** `/api/jobs`
-- **Headers:** None
-- **Request Body:** None
-
-#### Response (200 OK):
+- **Response (200 OK):**
 ```json
 [
   {
     "id": "aiml-engineer",
     "title": "AI/ML Engineer",
-    "requiredSkills": [
-      "Python",
-      "Machine Learning",
-      "NumPy",
-      "Pandas",
-      "Scikit-learn"
-    ],
-    "preferredSkills": [
-      "TensorFlow",
-      "PyTorch",
-      "Deep Learning",
-      "NLP",
-      "Computer Vision",
-      "Docker"
-    ],
-    "description": "Develop and deploy machine learning models, analyze complex datasets, and build intelligent algorithms for production applications."
+    "requiredSkills": ["Python", "Machine Learning", "NumPy", "Pandas", "Scikit-learn"],
+    "preferredSkills": ["TensorFlow", "PyTorch", "Deep Learning", "NLP", "Docker"],
+    "description": "Develop and deploy machine learning models, analyze complex datasets, and build intelligent algorithms."
   },
   {
     "id": "frontend-developer",
     "title": "Frontend Developer",
-    "requiredSkills": [
-      "JavaScript",
-      "TypeScript",
-      "React",
-      "HTML",
-      "CSS",
-      "Tailwind CSS"
-    ],
-    "preferredSkills": [
-      "Next.js",
-      "Redux",
-      "GraphQL",
-      "REST APIs",
-      "Responsive Design",
-      "Jest"
-    ],
-    "description": "Build high-performance, accessible, and responsive user interfaces for modern web applications using React and Next.js."
+    "requiredSkills": ["JavaScript", "TypeScript", "React", "HTML", "CSS", "Tailwind CSS"],
+    "preferredSkills": ["Next.js", "Redux", "GraphQL", "REST APIs", "Jest"],
+    "description": "Build high-performance, accessible, and responsive user interfaces for modern web applications."
   },
   {
     "id": "backend-developer",
     "title": "Backend Developer",
-    "requiredSkills": [
-      "Python",
-      "Node.js",
-      "SQL",
-      "PostgreSQL",
-      "REST APIs"
-    ],
-    "preferredSkills": [
-      "FastAPI",
-      "Express",
-      "Docker",
-      "Redis",
-      "MongoDB",
-      "Microservices",
-      "AWS"
-    ],
-    "description": "Architect scalable backend services, design robust APIs, optimize database queries, and ensure server security."
+    "requiredSkills": ["Python", "Node.js", "SQL", "PostgreSQL", "REST APIs"],
+    "preferredSkills": ["FastAPI", "Express", "Docker", "Redis", "MongoDB", "AWS"],
+    "description": "Architect scalable backend services, design robust APIs, and optimize database queries."
   },
   {
     "id": "fullstack-developer",
     "title": "Full Stack Developer",
-    "requiredSkills": [
-      "JavaScript",
-      "TypeScript",
-      "React",
-      "Node.js",
-      "SQL",
-      "Git"
-    ],
-    "preferredSkills": [
-      "Next.js",
-      "PostgreSQL",
-      "Docker",
-      "AWS",
-      "Tailwind CSS",
-      "REST APIs"
-    ],
-    "description": "Deliver end-to-end web applications bridging frontend user experience with reliable backend microservices and databases."
+    "requiredSkills": ["JavaScript", "TypeScript", "React", "Node.js", "SQL", "Git"],
+    "preferredSkills": ["Next.js", "PostgreSQL", "Docker", "AWS", "Tailwind CSS"],
+    "description": "Deliver end-to-end web applications bridging frontend experience with reliable backend microservices."
   },
   {
     "id": "data-analyst",
     "title": "Data Analyst",
-    "requiredSkills": [
-      "SQL",
-      "Excel",
-      "Python",
-      "Power BI",
-      "Data Visualization"
-    ],
-    "preferredSkills": [
-      "Tableau",
-      "Pandas",
-      "NumPy",
-      "Statistics",
-      "ETL",
-      "Business Intelligence"
-    ],
-    "description": "Transform raw business data into actionable insights, interactive dashboards, and strategic performance reports."
+    "requiredSkills": ["SQL", "Excel", "Python", "Power BI", "Data Visualization"],
+    "preferredSkills": ["Tableau", "Pandas", "NumPy", "Statistics", "ETL"],
+    "description": "Transform raw business data into actionable insights, interactive dashboards, and reports."
   }
 ]
 ```
 
 ---
 
-### 3.3. Analyze Resume (Core Endpoint)
-
-Uploads the candidate's resume, parses extracted entities, compares against the selected role, and computes ATS match metrics, missing skills, and suggestions.
+### 3.3. Analyze Resume (Core Endpoint & Auto-Save)
+Uploads the resume, parses entities, compares against the selected role, computes ATS match metrics, missing skills, suggestions, and **automatically saves the record to the database**.
 
 - **Method:** `POST`
 - **Endpoint:** `/api/analyze`
 - **Content-Type:** `multipart/form-data`
 
 #### Request Parameters (Form-Data):
-| Field | Type | Required | Description | Example |
-| :--- | :--- | :--- | :--- | :--- |
-| `resume` | `File` (Binary) | **Yes** | PDF or DOCX file (Max 5MB) | `my_resume.pdf` |
-| `jobRole` | `string` | **Yes** | Predefined Job Role ID | `"aiml-engineer"` |
-
-> ⚠️ **Important:** Do NOT manually set `headers: { 'Content-Type': 'multipart/form-data' }` in `fetch()`. The browser automatically sets it with the proper `boundary` string when passing a `FormData` object.
-
----
+| Field | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `resume` | `File` (Binary) | **Yes** | PDF or DOCX file (Max 5MB) |
+| `jobRole` | `string` | **Yes** | Predefined Job Role ID |
 
 #### Success Response (200 OK):
 ```json
 {
+  "id": "8ef39955-157a-406c-a5bf-3ff639c47df0",
+  "databaseBackend": "sqlite",
   "candidate": {
     "name": "Alex Chen"
   },
   "skills": [
-    "Data Analysis",
-    "Docker",
-    "ETL",
-    "Git",
-    "GitHub",
-    "Linux",
-    "Machine Learning",
-    "Matplotlib",
-    "NumPy",
-    "Pandas",
-    "Predictive Modeling",
-    "Python",
-    "REST APIs",
-    "Scikit-learn",
-    "SQL"
+    "Data Analysis", "Docker", "Git", "Linux", "Machine Learning",
+    "NumPy", "Pandas", "Python", "REST APIs", "Scikit-learn", "SQL"
   ],
   "education": [
     {
@@ -266,16 +192,10 @@ Uploads the candidate's resume, parses extracted entities, compares against the 
     }
   ],
   "matchedSkills": [
-    "Python",
-    "Machine Learning",
-    "NumPy",
-    "Pandas",
-    "Scikit-learn",
-    "Docker"
+    "Python", "Machine Learning", "NumPy", "Pandas", "Scikit-learn", "Docker"
   ],
   "missingSkills": [
-    "TensorFlow",
-    "PyTorch"
+    "TensorFlow", "PyTorch"
   ],
   "matchScore": 83,
   "suggestions": [
@@ -288,51 +208,25 @@ Uploads the candidate's resume, parses extracted entities, compares against the 
 
 ---
 
-#### Error Responses:
+### 3.4. Get Past Analyses History
+Used to display past candidate evaluations in the **"History / Past Analyses"** tab.
 
-##### 1. Unsupported File Extension (400 Bad Request):
+- **Method:** `GET`
+- **Endpoint:** `/api/history?limit=20`
+- **Query Params:** `limit` (optional integer, default 20)
+
+#### Response (200 OK):
 ```json
 {
-  "detail": "Unsupported file format: '.txt'. Please upload a valid PDF (or DOCX) file."
-}
-```
-
-##### 2. Empty File (400 Bad Request):
-```json
-{
-  "detail": "Uploaded file is empty. Please select a valid resume."
-}
-```
-
-##### 3. File Too Large (400 Bad Request):
-```json
-{
-  "detail": "File size exceeds the 5MB limit. Please upload a smaller resume."
-}
-```
-
-##### 4. Unknown Job Role (404 Not Found):
-```json
-{
-  "detail": "Job role 'unknown-role' not found in predefined list."
-}
-```
-
-##### 5. Scanned / Unreadable PDF (422 Unprocessable Entity):
-```json
-{
-  "detail": "Unable to extract readable text from the document. Please ensure it is not a scanned image or empty."
-}
-```
-
-##### 6. Missing Parameters (422 Unprocessable Entity):
-```json
-{
-  "detail": [
+  "total": 1,
+  "history": [
     {
-      "type": "missing",
-      "loc": ["body", "resume"],
-      "msg": "Field required"
+      "id": "8ef39955-157a-406c-a5bf-3ff639c47df0",
+      "candidateName": "Alex Chen",
+      "fileName": "sample_resume.pdf",
+      "jobRoleId": "aiml-engineer",
+      "matchScore": 83,
+      "createdAt": "2026-10-01T07:21:46.123456"
     }
   ]
 }
@@ -340,232 +234,68 @@ Uploads the candidate's resume, parses extracted entities, compares against the 
 
 ---
 
-## 💻 4. Next.js Frontend Integration Examples
+### 3.5. Get Analysis Detail by ID
+Retrieve the full details of any previous evaluation by its record ID.
 
-### 4.1. Client-Side API Helper (`lib/api.ts`)
+- **Method:** `GET`
+- **Endpoint:** `/api/history/{id}`
+
+#### Response (200 OK):
+Returns the complete `AnalysisResult` object matching Section 3.3.
+
+---
+
+## 💻 4. Next.js Client Helper (`lib/api.ts`)
 
 ```typescript
-import { JobRole, AnalysisResult, HealthResponse } from "@/types/api";
+import { JobRole, AnalysisResult, HistoryResponse, HealthResponse } from "@/types/api";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
 
-/**
- * Fetch all predefined job roles for dropdown selector
- */
 export async function fetchJobRoles(): Promise<JobRole[]> {
-  const response = await fetch(`${BACKEND_URL}/api/jobs`);
-  if (!response.ok) {
-    throw new Error(`Failed to load job roles: ${response.statusText}`);
-  }
-  return response.json();
+  const res = await fetch(`${BACKEND_URL}/api/jobs`);
+  if (!res.ok) throw new Error("Failed to load job roles");
+  return res.json();
 }
 
-/**
- * Submit PDF resume and selected job role for analysis
- */
 export async function analyzeResume(file: File, jobRoleId: string): Promise<AnalysisResult> {
   const formData = new FormData();
   formData.append("resume", file);
   formData.append("jobRole", jobRoleId);
 
-  const response = await fetch(`${BACKEND_URL}/api/analyze`, {
+  const res = await fetch(`${BACKEND_URL}/api/analyze`, {
     method: "POST",
     body: formData,
   });
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    // If backend returned a detailed error message, throw it
-    throw new Error(data.detail || "Failed to analyze resume");
-  }
-
-  return data as AnalysisResult;
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.detail || "Failed to analyze resume");
+  return data;
 }
 
-/**
- * Check backend service health
- */
-export async function checkBackendHealth(): Promise<HealthResponse> {
-  const response = await fetch(`${BACKEND_URL}/api/health`);
-  return response.json();
+export async function fetchHistory(limit: number = 20): Promise<HistoryResponse> {
+  const res = await fetch(`${BACKEND_URL}/api/history?limit=${limit}`);
+  if (!res.ok) throw new Error("Failed to load history");
+  return res.json();
 }
-```
 
----
-
-### 4.2. Example React Component Usage (`components/ResumeAnalyzer.tsx`)
-
-```tsx
-"use client";
-
-import React, { useState, useEffect } from "react";
-import { fetchJobRoles, analyzeResume } from "@/lib/api";
-import { JobRole, AnalysisResult } from "@/types/api";
-
-export default function ResumeAnalyzer() {
-  const [jobs, setJobs] = useState<JobRole[]>([]);
-  const [selectedRole, setSelectedRole] = useState<string>("aiml-engineer");
-  const [file, setFile] = useState<File | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<AnalysisResult | null>(null);
-
-  // 1. Load job roles on mount
-  useEffect(() => {
-    fetchJobRoles()
-      .then((data) => {
-        setJobs(data);
-        if (data.length > 0) setSelectedRole(data[0].id);
-      })
-      .catch((err) => setError(err.message));
-  }, []);
-
-  // 2. Submit handler
-  const handleAnalyze = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!file) {
-      setError("Please select a resume PDF file.");
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const data = await analyzeResume(file, selectedRole);
-      setResult(data);
-    } catch (err: any) {
-      setError(err.message || "An unexpected error occurred.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="max-w-4xl mx-auto p-6 space-y-8">
-      {/* Upload & Form */}
-      <form onSubmit={handleAnalyze} className="bg-white p-6 rounded-xl shadow border space-y-4">
-        <div>
-          <label className="block font-medium mb-1">Target Job Role</label>
-          <select
-            value={selectedRole}
-            onChange={(e) => setSelectedRole(e.target.value)}
-            className="w-full p-2 border rounded-lg"
-          >
-            {jobs.map((job) => (
-              <option key={job.id} value={job.id}>
-                {job.title}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label className="block font-medium mb-1">Upload Resume (PDF)</label>
-          <input
-            type="file"
-            accept=".pdf,.docx"
-            onChange={(e) => setFile(e.target.files?.[0] || null)}
-            className="w-full p-2 border rounded-lg"
-          />
-        </div>
-
-        {error && <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm">{error}</div>}
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg disabled:opacity-50"
-        >
-          {loading ? "Analyzing resume..." : "Analyze Resume"}
-        </button>
-      </form>
-
-      {/* Results Dashboard */}
-      {result && (
-        <div className="bg-white p-6 rounded-xl shadow border space-y-6">
-          <div className="flex items-center justify-between border-b pb-4">
-            <div>
-              <h2 className="text-2xl font-bold">{result.candidate.name}</h2>
-              <p className="text-gray-500">Evaluated Candidate Profile</p>
-            </div>
-            <div className="text-right">
-              <span className="text-3xl font-extrabold text-blue-600">{result.matchScore}%</span>
-              <p className="text-xs text-gray-500 font-medium">Job Match</p>
-            </div>
-          </div>
-
-          {/* Matched Skills */}
-          <div>
-            <h3 className="font-semibold text-green-700 mb-2">✅ Matched Skills</h3>
-            <div className="flex flex-wrap gap-2">
-              {result.matchedSkills.map((skill) => (
-                <span key={skill} className="px-3 py-1 bg-green-50 text-green-700 border border-green-200 rounded-full text-sm">
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Missing Skills */}
-          <div>
-            <h3 className="font-semibold text-red-700 mb-2">⚠️ Missing Skills</h3>
-            <div className="flex flex-wrap gap-2">
-              {result.missingSkills.length > 0 ? (
-                result.missingSkills.map((skill) => (
-                  <span key={skill} className="px-3 py-1 bg-red-50 text-red-700 border border-red-200 rounded-full text-sm">
-                    {skill}
-                  </span>
-                ))
-              ) : (
-                <p className="text-sm text-gray-500">All required skills covered!</p>
-              )}
-            </div>
-          </div>
-
-          {/* Suggestions */}
-          <div>
-            <h3 className="font-semibold text-gray-800 mb-2">💡 Improvement Suggestions</h3>
-            <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
-              {result.suggestions.map((suggestion, idx) => (
-                <li key={idx}>{suggestion}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+export async function fetchHistoryDetail(id: string): Promise<AnalysisResult> {
+  const res = await fetch(`${BACKEND_URL}/api/history/${id}`);
+  if (!res.ok) throw new Error("Failed to load analysis detail");
+  return res.json();
 }
 ```
 
 ---
 
-## 🔄 5. Optional Next.js Rewrites (No CORS / Proxy Setup)
+## ☁️ 5. Supabase Configuration (Optional Cloud Sync)
 
-If you prefer to make calls to `/api/analyze` directly without writing `http://localhost:8000`, add this rewrite in `frontend/ai-resume-analyzer/next.config.ts`:
-
-```typescript
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: "http://localhost:8000/api/:path*",
-      },
-    ];
-  },
-};
-
-export default nextConfig;
-```
-
-With this rewrite in place, your frontend code can simply call:
-```typescript
-fetch("/api/analyze", { method: "POST", body: formData });
-fetch("/api/jobs");
-```
-And Next.js will automatically proxy the requests to the FastAPI backend!
+To connect Supabase Cloud:
+1. Open [database.new](https://database.new) and create a free Supabase project.
+2. In Supabase SQL Editor: Run [backend/database/schema.sql](backend/database/schema.sql).
+3. In `backend/.env`:
+   ```bash
+   SUPABASE_URL=https://your-project.supabase.co
+   SUPABASE_KEY=your-anon-or-service-key
+   ```
+4. The backend automatically switches to Supabase Cloud on reload!
