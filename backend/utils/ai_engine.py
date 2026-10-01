@@ -1,6 +1,12 @@
 import os
 import json
 from typing import Dict, Any, List, Optional
+from dotenv import load_dotenv
+
+# Ensure environment variables are loaded
+load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
+load_dotenv()
+
 from utils.parser import extract_candidate_name, extract_contact_info, extract_skills, extract_education, extract_experience
 from utils.matcher import get_job_by_id, match_resume_with_job, match_resume_with_custom_jd, compare_multiple_roles
 from utils.suggestions import calculate_ats_rubric, generate_suggestions
@@ -57,7 +63,7 @@ def analyze_resume_pipeline(
         ats_rubric=ats_rubric
     )
 
-    # 5. Optional Groq AI Enhancement (Llama 3.3 70B)
+    # 5. Optional Groq AI Enhancement
     groq_key = os.getenv("GROQ_API_KEY")
     ai_enhancements = None
     if groq_key:
@@ -69,6 +75,7 @@ def analyze_resume_pipeline(
                 groq_key=groq_key
             )
             if ai_enhancements and "suggestions" in ai_enhancements:
+                # Merge AI suggestions with rule-based ones if needed, or use AI's tailored ones
                 suggestions = ai_enhancements["suggestions"]
         except Exception as e:
             print(f"[Groq AI] Call skipped ({e}). Using deterministic engine.")
@@ -92,7 +99,8 @@ def analyze_resume_pipeline(
         "missingSkills": missing_skills,
         "education": education,
         "experience": experience,
-        "suggestions": suggestions
+        "suggestions": suggestions,
+        "aiEnhanced": ai_enhancements is not None
     }
 
     if ai_enhancements and "starRewrites" in ai_enhancements:
@@ -100,10 +108,36 @@ def analyze_resume_pipeline(
 
     return response_payload
 
+_cached_groq_model: Optional[str] = None
+
+def _get_best_groq_model(client) -> str:
+    global _cached_groq_model
+    if _cached_groq_model:
+        return _cached_groq_model
+    try:
+        models_data = client.models.list().data
+        available_ids = {m.id for m in models_data}
+        preferred = [
+            "openai/gpt-oss-120b",
+            "openai/gpt-oss-20b",
+            "llama-3.3-70b-versatile",
+            "llama-3.1-70b-versatile",
+            "llama-3.1-8b-instant"
+        ]
+        for candidate in preferred:
+            if candidate in available_ids:
+                _cached_groq_model = candidate
+                return candidate
+    except Exception as e:
+        print(f"[Groq AI] Could not list models: {e}")
+    _cached_groq_model = "openai/gpt-oss-120b"
+    return _cached_groq_model
+
 def _call_groq_enhancer(resume_text: str, job_title: str, missing_skills: List[str], groq_key: str) -> Optional[Dict[str, Any]]:
-    """Use Groq's high-speed Llama 3.3 API to provide STAR rewrites and tailored critique."""
+    """Use Groq Cloud LLM API to provide STAR rewrites and tailored critique."""
     from openai import OpenAI
     client = OpenAI(base_url="https://api.groq.com/openai/v1", api_key=groq_key)
+    model_name = _get_best_groq_model(client)
 
     prompt = f"""
 You are an expert Executive Resume Coach and ATS Specialist.
@@ -129,10 +163,11 @@ Respond ONLY in valid JSON matching this schema:
 }}
 """
     response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model=model_name,
         messages=[{"role": "user", "content": prompt}],
         response_format={"type": "json_object"},
         temperature=0.2,
-        max_tokens=600
+        max_tokens=700
     )
     return json.loads(response.choices[0].message.content)
+

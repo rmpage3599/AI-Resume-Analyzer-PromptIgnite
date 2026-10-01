@@ -1,12 +1,15 @@
 import os
 import sys
 import io
+from typing import Dict, Any, List, Optional, Tuple
 from fastapi import FastAPI, File, UploadFile, Form, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from typing import Dict, Any, List, Optional, Tuple
+from dotenv import load_dotenv
 
-# Ensure backend directory is on sys.path
+# Ensure backend directory is on sys.path and load environment variables
 sys.path.insert(0, os.path.dirname(__file__))
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
+load_dotenv()
 
 from utils.parser import extract_text_from_pdf, extract_text_from_docx, extract_skills, extract_candidate_name, extract_contact_info
 from utils.matcher import load_jobs, get_job_by_id, compare_multiple_roles
