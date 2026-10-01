@@ -134,20 +134,18 @@ function FlawedPreview({ model }: { model: PreviewModel }) {
                       margin: "1mm 0 0",
                     }}
                   >
-                    <li style={{ fontSize: "9pt", color: "#444" }}>
-                      {exp.role
-                        ? `Contributed to ${exp.company || "the team"} initiatives.`
-                        : "—"}
-                    </li>
-                    <li
-                      style={{
-                        fontSize: "9pt",
-                        color: "#444",
-                        textTransform: "lowercase",
-                      }}
-                    >
-                      worked with internal stakeholders on delivery.
-                    </li>
+                    {exp.bullets.map((b, bIdx) => (
+                      <li
+                        key={bIdx}
+                        style={{
+                          fontSize: "9pt",
+                          color: "#444",
+                          textTransform: bIdx % 2 === 1 ? "lowercase" : "none",
+                        }}
+                      >
+                        {b.original}
+                      </li>
+                    ))}
                   </ul>
                 </li>
               ))}
@@ -372,26 +370,29 @@ function CleanPreview({
                       margin: 0,
                     }}
                   >
-                    <li
-                      style={{
-                        fontSize: p.body,
-                        color: "#334155",
-                        lineHeight: 1.4,
-                      }}
-                    >
-                      Contributed to {exp.company || "the team"} initiatives
-                      and shipped measurable improvements.
-                    </li>
-                    <li
-                      style={{
-                        fontSize: p.body,
-                        color: "#334155",
-                        lineHeight: 1.4,
-                      }}
-                    >
-                      Collaborated with internal stakeholders on delivery and
-                      documentation.
-                    </li>
+                    {exp.bullets.map((b, bIdx) => (
+                      <li
+                        key={bIdx}
+                        style={{
+                          fontSize: p.body,
+                          color: "#334155",
+                          lineHeight: 1.4,
+                          marginBottom: "1.5mm",
+                        }}
+                      >
+                        <span>{b.enhanced}</span>
+                        {b.isRewritten && b.rewriteType === "star" && (
+                          <span className="ml-2 inline-flex items-center rounded bg-blue-50 px-1.5 py-0.5 text-[8pt] font-semibold text-[#0d47a1] border border-blue-200/70 align-middle print:hidden">
+                            STAR Rewrite
+                          </span>
+                        )}
+                        {b.isRewritten && b.rewriteType === "action-verb" && (
+                          <span className="ml-2 inline-flex items-center rounded bg-emerald-50 px-1.5 py-0.5 text-[8pt] font-semibold text-emerald-700 border border-emerald-200/70 align-middle print:hidden">
+                            Action Verb
+                          </span>
+                        )}
+                      </li>
+                    ))}
                   </ul>
                 </li>
               ))}
@@ -438,12 +439,62 @@ function CleanPreview({
         {/* Skills */}
         <section>
           <SectionHeading
-            label="Skills"
+            label="Skills & Competencies"
             color={p.accent}
             size={p.sectionSize}
           />
           {model.skills.length === 0 ? (
             <p className="text-[10pt] text-[#94a3b8]">—</p>
+          ) : model.coreCompetencies && model.coreCompetencies.length > 0 ? (
+            <div className="flex flex-col" style={{ gap: "2.5mm", marginTop: "1mm" }}>
+              <div>
+                <p style={{ fontSize: "8pt", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, color: p.accent, margin: "0 0 1mm" }}>
+                  Core Role Competencies
+                </p>
+                <div className="flex flex-wrap" style={{ gap: "1.5mm" }}>
+                  {model.coreCompetencies.map((s, i) => (
+                    <span
+                      key={i}
+                      className="rounded-[3px] font-medium"
+                      style={{
+                        fontSize: "8.5pt",
+                        color: "#0d47a1",
+                        border: "1px solid rgba(13,71,161,0.25)",
+                        padding: "0.5mm 2.2mm",
+                        background: "rgba(13,71,161,0.06)",
+                      }}
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {model.supportingSkills && model.supportingSkills.length > 0 && (
+                <div>
+                  <p style={{ fontSize: "8pt", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 600, color: "#64748b", margin: "1mm 0 1mm" }}>
+                    Supporting Technologies & Tools
+                  </p>
+                  <div className="flex flex-wrap" style={{ gap: "1.5mm" }}>
+                    {model.supportingSkills.map((s, i) => (
+                      <span
+                        key={i}
+                        className="rounded-[3px]"
+                        style={{
+                          fontSize: "8.5pt",
+                          color: "#334155",
+                          border: `1px solid ${p.rule}`,
+                          padding: "0.5mm 2.2mm",
+                          background: "#f8fafc",
+                        }}
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           ) : (
             <div
               className="flex flex-wrap"

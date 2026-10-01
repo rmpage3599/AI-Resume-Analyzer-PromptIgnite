@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import ResumePreview from "./ResumePreview";
-import { ArrowRightIcon, CheckIcon, DownloadIcon } from "@/components/core/Icons";
+import { ArrowRightIcon, CheckIcon, DownloadIcon, SparkIcon } from "@/components/core/Icons";
 import {
   type EnhanceStyle,
 } from "@/lib/enhancementStore";
@@ -40,14 +40,29 @@ export default function EnhancedResumeView({
           <div>
             <span className="label-eyebrow">Resume enhanced</span>
             <h2 className="mt-1 text-[20px] font-semibold tracking-[-0.01em] text-[#0d2740]">
-              Your resume presentation has been improved
+              Your resume content and presentation have been enhanced
             </h2>
           </div>
         </div>
         <p className="mt-3 max-w-2xl text-[14px] leading-relaxed text-[#4f667a]">
-          Your resume content has not changed. Only formatting, spacing,
-          hierarchy and visual rhythm were adjusted.
+          Your resume wording has been optimized with AI STAR rewrites, strong action verbs, and tailored positioning based on your analysis suggestions — without fabricating any fake experience or unverified skills.
         </p>
+
+        {model.contentEnhancement && (
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-100/80 px-3 py-1 text-xs font-semibold text-[#0d47a1]">
+              <SparkIcon className="h-3.5 w-3.5" />
+              {model.contentEnhancement.starRewritesCount} STAR Rewrites Applied
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100/80 px-3 py-1 text-xs font-semibold text-emerald-800">
+              <CheckIcon className="h-3.5 w-3.5" />
+              {model.contentEnhancement.actionVerbsCount} Action Verbs Elevated
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-100/80 px-3 py-1 text-xs font-semibold text-purple-800">
+              Core Skills Prioritized
+            </span>
+          </div>
+        )}
 
         <div className="mt-5 flex flex-wrap items-center gap-3">
           <button

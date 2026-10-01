@@ -197,19 +197,42 @@ def extract_experience(text: str) -> List[Dict[str, Any]]:
                     current_entry = None
                     break
 
+            clean_role = line
+            company = "Technology Organization"
             duration = "1-2 years"
+
+            if " - " in line:
+                parts = line.split(" - ", 1)
+                clean_role = parts[0].strip()
+                company = parts[1].strip()
+            elif " | " in line:
+                parts = line.split(" | ", 1)
+                clean_role = parts[0].strip()
+                company = parts[1].strip()
+            elif " at " in line.lower():
+                idx = line.lower().find(" at ")
+                clean_role = line[:idx].strip()
+                company = line[idx + 4:].strip()
+
             date_match = re.search(r"(?i)\b((?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)?\s*20\d{2}\s*[-–]\s*(?:present|current|20\d{2}))\b", line)
             if date_match:
                 duration = date_match.group(0)
 
-            company = "Technology Organization"
             if i + 1 < len(target_lines):
                 next_l = target_lines[i + 1]
-                if not any(rk in next_l.lower() for rk in role_keywords) and not next_l.startswith(("-", "•")):
-                    company = next_l
+                date_in_next = re.search(r"(?i)\b((?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)?\s*20\d{2}\s*[-–]\s*(?:present|current|20\d{2}))\b", next_l)
+                if date_in_next:
+                    duration = date_in_next.group(0)
+                    if company == "Technology Organization":
+                        rem = re.sub(r"(?i)\b((?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)?\s*20\d{2}\s*[-–]\s*(?:present|current|20\d{2}))\b", "", next_l).strip(" |-,")
+                        if rem:
+                            company = rem
+                elif not any(rk in next_l.lower() for rk in role_keywords) and not next_l.startswith(("-", "•")):
+                    if company == "Technology Organization":
+                        company = next_l
 
             current_entry = {
-                "role": line,
+                "role": clean_role,
                 "company": company,
                 "duration": duration,
                 "bullets": []

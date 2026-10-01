@@ -79,9 +79,34 @@ export default function EnhancementSummary({ analysis }: Props) {
         })}
       </div>
 
-      <p className="mt-5 text-[12px] text-[#7890a4]">
-        Status is qualitative — based on what we detected in your existing
-        resume content. No fabrication, no content rewriting.
+      {analysis.contentEnhancement && (
+        <div className="mt-5 rounded-xl border border-blue-200/80 bg-blue-50/70 p-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-800">
+                Content & Wording Optimization
+              </span>
+              <p className="text-xs text-slate-600 mt-0.5">
+                AI STAR rewrites, strong action verbs, and tailored positioning ready to apply.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center rounded-lg bg-white px-2.5 py-1 text-xs font-semibold text-[#0d47a1] border border-blue-200 shadow-xs">
+                {analysis.contentEnhancement.starRewritesCount} STAR Rewrites
+              </span>
+              <span className="inline-flex items-center rounded-lg bg-white px-2.5 py-1 text-xs font-semibold text-emerald-700 border border-emerald-200 shadow-xs">
+                {analysis.contentEnhancement.actionVerbsCount} Action Verbs
+              </span>
+              <span className="inline-flex items-center rounded-lg bg-white px-2.5 py-1 text-xs font-semibold text-purple-700 border border-purple-200 shadow-xs">
+                {analysis.contentEnhancement.skillsPrioritizedCount} Core Skills
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <p className="mt-4 text-[12px] text-[#7890a4]">
+        Content wording is upgraded strictly using verified analysis suggestions and STAR rewrites without fabricating fake skills or unverified experience.
       </p>
     </article>
   );

@@ -5,6 +5,10 @@
 
 export interface CandidateInfo {
   name: string;
+  email?: string;
+  phone?: string;
+  linkedin?: string;
+  github?: string;
 }
 
 export interface EducationEntry {
@@ -17,6 +21,7 @@ export interface ExperienceEntry {
   role: string;
   company: string;
   duration: string;
+  bullets?: string[];
 }
 
 export interface JobRole {

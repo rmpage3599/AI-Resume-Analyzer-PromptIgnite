@@ -103,7 +103,7 @@ export default function EnhancePage({ analysis }: Props) {
       <div className="anim-fade space-y-6">
         <EnhancementHero
           title="Reviewing your resume"
-          subtitle="Looking at typography, spacing, structure and consistency — without changing your content."
+          subtitle="Analyzing wording, STAR rewrites, section rhythm, and ATS optimization."
         />
         <EnhancementProgress start onComplete={() => undefined} />
       </div>
@@ -114,7 +114,7 @@ export default function EnhancePage({ analysis }: Props) {
     <div className="anim-fade space-y-6">
       <EnhancementHero
         title="Resume enhancement"
-        subtitle="Improve how your resume looks — without changing what it says."
+        subtitle="Upgrade your resume wording with AI STAR rewrites, active verbs, and publication-ready formatting."
       />
 
       <EnhancementSummary analysis={enhancement} />
