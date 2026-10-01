@@ -48,6 +48,24 @@ export interface StarRewrite {
   improvedStarBullet: string;
 }
 
+export interface RoleRankingItem {
+  jobRoleId: string;
+  jobTitle: string;
+  matchScore: number;
+  semanticScore?: number;
+  matchedSkillsCount: number;
+  missingSkillsCount: number;
+  topMatchedSkills: string[];
+  topMissingSkills: string[];
+}
+
+export interface MultiRoleComparison {
+  totalRolesCompared: number;
+  bestFitRole: string;
+  bestFitScore: number;
+  rankings: RoleRankingItem[];
+}
+
 export interface AnalysisResult {
   id: string;
   databaseBackend: "supabase" | "sqlite";
@@ -62,11 +80,14 @@ export interface AnalysisResult {
   createdAt?: string;
   fileName?: string;
   jobRoleId?: string;
+  targetJobTitle?: string;
   atsScore?: number;
   atsRubric?: AtsRubric;
   starRewrites?: StarRewrite[];
   aiEnhanced?: boolean;
+  multiRoleComparison?: MultiRoleComparison;
 }
+
 
 
 export interface HistoryItem {

@@ -3,10 +3,16 @@ import { multipartFetch } from "./client";
 
 export function analyzeResume(
   resume: File,
-  jobRoleId: string,
+  jobRoleId?: string,
+  customJd?: string,
 ): Promise<AnalysisResult> {
   const formData = new FormData();
   formData.append("resume", resume);
-  formData.append("jobRole", jobRoleId);
+  if (customJd && customJd.trim()) {
+    formData.append("customJd", customJd.trim());
+  } else if (jobRoleId) {
+    formData.append("jobRole", jobRoleId);
+  }
   return multipartFetch<AnalysisResult>("/api/analyze", formData);
 }
+

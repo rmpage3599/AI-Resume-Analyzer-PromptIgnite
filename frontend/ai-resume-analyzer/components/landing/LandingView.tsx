@@ -25,17 +25,27 @@ export default function LandingView({
 }: Props) {
   const router = useRouter();
   const [file, setFile] = useState<File | null>(null);
+  const [mode, setMode] = useState<"role" | "custom">("role");
   const [roleId, setRoleId] = useState<string>(defaultRoleId);
+  const [customJd, setCustomJd] = useState<string>("");
   const [fileError, setFileError] = useState<string | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const submit = async () => {
     if (!file || submitting) return;
+    if (mode === "custom" && !customJd.trim()) {
+      setApiError("Please paste a job description.");
+      return;
+    }
     setSubmitting(true);
     setApiError(null);
     try {
-      const result: AnalysisResult = await analyzeResume(file, roleId);
+      const result: AnalysisResult = await analyzeResume(
+        file,
+        mode === "role" ? roleId : undefined,
+        mode === "custom" ? customJd.trim() : undefined,
+      );
       saveResult(result);
       window.dispatchEvent(new Event("resumind:result-updated"));
       router.push("/results");
@@ -52,11 +62,12 @@ export default function LandingView({
 
   if (submitting) {
     const role = jobs.find((r) => r.id === roleId) ?? jobs[0];
+    const targetLabel = mode === "custom" ? "Custom Job Description" : (role?.title ?? "Target Role");
     return (
       <section className="anim-fade relative z-10 mx-auto max-w-[1280px] px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
         <AnalyzingView
           fileName={file?.name ?? ""}
-          roleLabel={role?.title ?? ""}
+          roleLabel={targetLabel}
         />
       </section>
     );
@@ -69,18 +80,18 @@ export default function LandingView({
       <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">
           <h1 className="text-[clamp(2rem,3.8vw,3rem)] font-semibold leading-[1.08] tracking-[-0.022em] text-[#0d2740]">
-            Understand your resume.
+            AI Resume Analyzer.
             <br />
-            <span className="grad-text">Before recruiters do.</span>
+            <span className="grad-text">Scored & Benchmarked.</span>
           </h1>
-          <p className="mt-5 max-w-md text-[15px] leading-relaxed text-[#4f667a]">
-            See how your resume aligns with your target role.
+          <p className="mt-4 max-w-md text-[15px] leading-relaxed text-[#4f667a]">
+            Match your resume against industry roles or custom job descriptions with ATS rubric scoring and AI insights.
           </p>
 
           <ol className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-[#4f667a]">
-            <Step n="01" label="Upload" />
-            <Step n="02" label="Select role" />
-            <Step n="03" label="Analyze" />
+            <Step n="01" label="Upload Resume" />
+            <Step n="02" label="Select Role or Paste JD" />
+            <Step n="03" label="Instant Analysis" />
           </ol>
 
           {jobsError && (
@@ -89,11 +100,7 @@ export default function LandingView({
                 Backend unavailable
               </p>
               <p className="mt-1 text-[12.5px] leading-relaxed text-[#4f667a]">
-                {jobsError} Start the FastAPI backend (
-                <code className="rounded bg-white/70 px-1 py-0.5 text-[11px] text-[#0d47a1]">
-                  NEXT_PUBLIC_BACKEND_URL
-                </code>
-                ) to enable real analysis.
+                {jobsError} Start the FastAPI backend on port 8000.
               </p>
             </div>
           )}
@@ -101,6 +108,7 @@ export default function LandingView({
 
         <div className="lg:col-span-7">
           <div className="glass-strong space-y-5 px-5 py-6 sm:px-7 sm:py-7">
+            {/* Step 1: Upload */}
             <UploadPanel
               file={file}
               error={fileError}
@@ -116,20 +124,70 @@ export default function LandingView({
               }}
             />
 
-            <RoleSelect
-              roles={jobs}
-              value={roleId}
-              onChange={setRoleId}
-              loading={jobsLoading}
-              disabled={jobsLoading || jobs.length === 0}
-            />
+            {/* Step 2: Role or Custom JD Mode Toggle */}
+            <div className="space-y-3">
+              <div className="flex rounded-[10px] bg-[rgba(13,71,161,0.06)] p-1">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMode("role");
+                    setApiError(null);
+                  }}
+                  className={`flex-1 rounded-[8px] py-1.5 text-[13px] font-semibold transition ${
+                    mode === "role"
+                      ? "bg-white text-[#0d47a1] shadow-sm"
+                      : "text-[#4f667a] hover:text-[#0d2740]"
+                  }`}
+                >
+                  🎯 Predefined Role
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMode("custom");
+                    setApiError(null);
+                  }}
+                  className={`flex-1 rounded-[8px] py-1.5 text-[13px] font-semibold transition ${
+                    mode === "custom"
+                      ? "bg-white text-[#0d47a1] shadow-sm"
+                      : "text-[#4f667a] hover:text-[#0d2740]"
+                  }`}
+                >
+                  📝 Custom Job Description
+                </button>
+              </div>
 
+              {mode === "role" ? (
+                <RoleSelect
+                  roles={jobs}
+                  value={roleId}
+                  onChange={setRoleId}
+                  loading={jobsLoading}
+                  disabled={jobsLoading || jobs.length === 0}
+                />
+              ) : (
+                <div>
+                  <textarea
+                    value={customJd}
+                    onChange={(e) => {
+                      setCustomJd(e.target.value);
+                      setApiError(null);
+                    }}
+                    placeholder="Paste job description requirements, qualifications, and skills here..."
+                    rows={4}
+                    className="w-full resize-none rounded-[12px] border border-[rgba(13,71,161,0.15)] bg-white/70 px-3.5 py-2.5 text-[13.5px] leading-relaxed text-[#0d2740] placeholder:text-[#7890a4] focus:border-[#0d47a1] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0d47a1]/15"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Step 3: Submit */}
             <div>
               <button
                 type="button"
                 onClick={submit}
-                disabled={!file || submitting || jobsLoading}
-                aria-disabled={!file || submitting || jobsLoading}
+                disabled={!file || submitting || (mode === "role" && jobsLoading) || (mode === "custom" && !customJd.trim())}
+                aria-disabled={!file || submitting || (mode === "role" && jobsLoading) || (mode === "custom" && !customJd.trim())}
                 className="btn-primary grad-cta w-full rounded-[12px] px-6 py-3.5 text-[14px] font-semibold tracking-[0.01em]"
               >
                 Analyze Resume
@@ -142,8 +200,7 @@ export default function LandingView({
               )}
 
               <p className="mt-3 text-center text-[11.5px] text-[#7890a4]">
-                Your resume is processed temporarily and is not permanently
-                stored.
+                Your resume is evaluated securely with Groq AI and ATS scoring.
               </p>
             </div>
           </div>
@@ -152,6 +209,7 @@ export default function LandingView({
     </section>
   );
 }
+
 
 function Step({ n, label }: { n: string; label: string }) {
   return (

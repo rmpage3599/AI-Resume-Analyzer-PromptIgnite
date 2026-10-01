@@ -106,7 +106,14 @@ def analyze_resume_pipeline(
     if ai_enhancements and "starRewrites" in ai_enhancements:
         response_payload["starRewrites"] = ai_enhancements["starRewrites"]
 
+    # 7. Compute Multi-Role Benchmark across all 12 roles
+    try:
+        response_payload["multiRoleComparison"] = compare_multiple_roles(skills, resume_text)
+    except Exception as e:
+        print(f"[Multi-Role] Benchmark skipped: {e}")
+
     return response_payload
+
 
 _cached_groq_model: Optional[str] = None
 
@@ -167,7 +174,8 @@ Respond ONLY in valid JSON matching this schema:
         messages=[{"role": "user", "content": prompt}],
         response_format={"type": "json_object"},
         temperature=0.2,
-        max_tokens=700
+        max_tokens=1500
     )
     return json.loads(response.choices[0].message.content)
+
 
