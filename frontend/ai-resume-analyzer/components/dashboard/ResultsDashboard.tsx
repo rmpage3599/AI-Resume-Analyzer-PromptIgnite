@@ -8,9 +8,11 @@ import SkillAlignmentPanel from "./SkillAlignmentPanel";
 import EducationPanel from "./EducationPanel";
 import ExperiencePanel from "./ExperiencePanel";
 import SuggestionsPanel from "./SuggestionsPanel";
+import StarRewritesPanel from "./StarRewritesPanel";
 import OverallAssessment from "./OverallAssessment";
 import { ResultHeader } from "./ResultHeader";
 import type { AnalysisResult, JobRole } from "@/lib/types";
+
 
 interface Props {
   result: AnalysisResult;
@@ -76,7 +78,16 @@ export default function ResultsDashboard({
       </div>
 
       <div className="mt-5">
+        <StarRewritesPanel
+          rubric={result.atsRubric}
+          starRewrites={result.starRewrites}
+          atsScore={result.atsScore}
+        />
+      </div>
+
+      <div className="mt-5">
         <OverallAssessment result={result} role={role} />
+
         <p className="mt-6 text-center text-[11.5px] text-[#7890a4]">
           Resumind processes your resume temporarily and does not store your
           data.

@@ -27,6 +27,27 @@ export interface JobRole {
   description: string;
 }
 
+export interface AtsSubScore {
+  score: number;
+  max: number;
+  notes?: string;
+}
+
+export interface AtsRubric {
+  overallAtsScore: number;
+  subScores: {
+    keywordMatchScore?: AtsSubScore;
+    impactQuantificationScore?: AtsSubScore;
+    actionVerbScore?: AtsSubScore;
+    formattingReadabilityScore?: AtsSubScore;
+  };
+}
+
+export interface StarRewrite {
+  originalBullet: string;
+  improvedStarBullet: string;
+}
+
 export interface AnalysisResult {
   id: string;
   databaseBackend: "supabase" | "sqlite";
@@ -41,7 +62,12 @@ export interface AnalysisResult {
   createdAt?: string;
   fileName?: string;
   jobRoleId?: string;
+  atsScore?: number;
+  atsRubric?: AtsRubric;
+  starRewrites?: StarRewrite[];
+  aiEnhanced?: boolean;
 }
+
 
 export interface HistoryItem {
   id: string;

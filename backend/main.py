@@ -156,8 +156,11 @@ async def analyze_resume(
 
     analysis_result["id"] = save_result.get("id")
     analysis_result["databaseBackend"] = save_result.get("backend")
+    analysis_result["fileName"] = filename
+    analysis_result["jobRoleId"] = jobRole or "custom-jd"
 
     return analysis_result
+
 
 @app.post("/api/compare-roles")
 async def compare_roles(
