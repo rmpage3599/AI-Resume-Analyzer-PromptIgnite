@@ -1,7 +1,8 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import type { MultiRoleComparison, RoleRankingItem } from "@/types/api";
+import { TrophyIcon, CheckIcon, AlertIcon } from "@/components/core/Icons";
 
 interface Props {
   comparison?: MultiRoleComparison;
@@ -34,7 +35,7 @@ export default function MultiRoleSidebar({ comparison, candidateName }: Props) {
       {/* Best Career Fit Highlight */}
       <div className="mt-4 rounded-[12px] border border-amber-300/40 bg-gradient-to-br from-amber-50/90 via-amber-100/50 to-orange-50/70 p-4 shadow-sm">
         <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-amber-800">
-          <span>🏆</span>
+          <TrophyIcon className="h-4 w-4 text-amber-700" />
           <span>Best Career Fit</span>
         </div>
         <p className="mt-1.5 text-[16px] font-bold text-[#0d2740]">
@@ -59,8 +60,7 @@ export default function MultiRoleSidebar({ comparison, candidateName }: Props) {
 
         {comparison.rankings.map((r: RoleRankingItem, idx: number) => {
           const rank = idx + 1;
-          const isTop3 = rank <= 3;
-          const medal = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : `#${rank.toString().padStart(2, "0")}`;
+          const rankLabel = `#${rank.toString().padStart(2, "0")}`;
           const isExpanded = expandedRole === r.jobRoleId;
 
           return (
@@ -78,8 +78,18 @@ export default function MultiRoleSidebar({ comparison, candidateName }: Props) {
                 className="flex w-full items-center justify-between p-3 text-left"
               >
                 <div className="flex min-w-0 items-center gap-2.5">
-                  <span className={`text-[12px] font-bold tabular-nums ${isTop3 ? "text-amber-700" : "text-[#7890a4]"}`}>
-                    {medal}
+                  <span
+                    className={`text-[11px] font-bold tabular-nums rounded px-1.5 py-0.5 ${
+                      rank === 1
+                        ? "bg-amber-100 text-amber-900 border border-amber-300/80"
+                        : rank === 2
+                        ? "bg-slate-200 text-slate-800"
+                        : rank === 3
+                        ? "bg-orange-100 text-orange-900"
+                        : "text-slate-400 font-medium"
+                    }`}
+                  >
+                    {rankLabel}
                   </span>
                   <span className="truncate text-[13.5px] font-medium text-[#0d2740]">
                     {r.jobTitle}
@@ -117,8 +127,9 @@ export default function MultiRoleSidebar({ comparison, candidateName }: Props) {
               {isExpanded && (
                 <div className="border-t border-[rgba(13,71,161,0.08)] p-3 text-[12px] space-y-2.5">
                   <div>
-                    <span className="font-semibold text-emerald-800">
-                      ✅ Matched ({r.matchedSkillsCount}):
+                    <span className="inline-flex items-center font-semibold text-emerald-800">
+                      <CheckIcon className="mr-1 h-3.5 w-3.5 text-emerald-600" />
+                      Matched ({r.matchedSkillsCount}):
                     </span>
                     <div className="mt-1 flex flex-wrap gap-1">
                       {r.topMatchedSkills && r.topMatchedSkills.length > 0 ? (
@@ -137,8 +148,9 @@ export default function MultiRoleSidebar({ comparison, candidateName }: Props) {
                   </div>
 
                   <div>
-                    <span className="font-semibold text-amber-800">
-                      ⚠️ Missing ({r.missingSkillsCount}):
+                    <span className="inline-flex items-center font-semibold text-amber-800">
+                      <AlertIcon className="mr-1 h-3.5 w-3.5 text-amber-600" />
+                      Missing ({r.missingSkillsCount}):
                     </span>
                     <div className="mt-1 flex flex-wrap gap-1">
                       {r.topMissingSkills && r.topMissingSkills.length > 0 ? (

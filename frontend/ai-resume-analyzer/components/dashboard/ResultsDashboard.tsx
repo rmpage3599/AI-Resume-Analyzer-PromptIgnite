@@ -33,24 +33,24 @@ export default function ResultsDashboard({
   );
 
   return (
-    <div className="relative z-10 mx-auto w-full max-w-[1360px] px-4 pb-16 pt-8 sm:px-6 lg:px-8 lg:pt-10">
-      <ResultHeader
-        role={role}
-        fileName={result.fileName}
-        targetJobTitle={result.targetJobTitle}
+    <div className="flex min-h-[calc(100vh-64px)] w-full flex-col lg:flex-row bg-[#f8fafc]">
+      {/* Left Sidebar Navigation — Docked Hard to Left Viewport Edge */}
+      <DashboardSidebar
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        candidateName={result.candidate.name}
+        matchScore={result.matchScore}
       />
 
-      <div className="mt-8 flex flex-col lg:flex-row gap-7 items-start">
-        {/* Left Sidebar Navigation */}
-        <DashboardSidebar
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-          candidateName={result.candidate.name}
-          matchScore={result.matchScore}
-        />
+      {/* Right Tab Content View (Modular & Compact — No Long Scrolling) */}
+      <main className="flex-1 min-w-0 p-5 sm:p-6 lg:p-8 xl:p-10">
+        <div className="max-w-6xl mx-auto space-y-6">
+          <ResultHeader
+            role={role}
+            fileName={result.fileName}
+            targetJobTitle={result.targetJobTitle}
+          />
 
-        {/* Right Tab Content View (Modular & Compact — No Long Scrolling) */}
-        <main className="flex-1 min-w-0 w-full">
           {/* TAB 1: OVERVIEW & SCORES */}
           {activeTab === "overview" && (
             <div className="space-y-6 anim-fade">
@@ -126,12 +126,12 @@ export default function ResultsDashboard({
               <OverallAssessment result={result} role={role} />
             </div>
           )}
-        </main>
-      </div>
 
-      <p className="mt-12 text-center text-[11.5px] text-[#7890a4]">
-        Resumind processes your resume temporarily and does not store your data.
-      </p>
+          <p className="mt-12 text-center text-[11.5px] text-[#7890a4]">
+            Resumind processes your resume temporarily and does not store your data.
+          </p>
+        </div>
+      </main>
     </div>
   );
 }

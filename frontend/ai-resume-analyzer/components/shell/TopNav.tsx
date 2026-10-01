@@ -17,8 +17,8 @@ export default function TopNav() {
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[rgba(13,71,161,0.10)] bg-[rgba(247,251,255,0.78)] backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white">
+      <div className="flex h-16 w-full items-center justify-between px-6 lg:px-8">
         <Link
           href="/analyze"
           className="flex items-center"

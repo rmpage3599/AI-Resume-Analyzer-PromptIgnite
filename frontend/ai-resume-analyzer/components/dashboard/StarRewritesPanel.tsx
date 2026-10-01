@@ -1,6 +1,7 @@
-﻿"use client";
+"use client";
 
 import type { AtsRubric, StarRewrite } from "@/types/api";
+import { ZapIcon, SparkIcon } from "@/components/core/Icons";
 
 interface Props {
   rubric?: AtsRubric;
@@ -110,7 +111,8 @@ export default function StarRewritesPanel({
               </h2>
             </div>
             <div className="flex items-center gap-1.5 rounded-full border border-sky-500/25 bg-sky-50/80 px-3 py-1 text-[12px] font-semibold text-sky-800">
-              ⚡ Generated via Groq Llama / GPT-OSS
+              <ZapIcon className="h-3.5 w-3.5 text-sky-600" />
+              <span>Generated via Groq Llama / GPT-OSS</span>
             </div>
           </div>
           <p className="mt-2 text-[13px] text-[#4f667a]">
@@ -131,9 +133,9 @@ export default function StarRewritesPanel({
                   &ldquo;{item.originalBullet}&rdquo;
                 </p>
 
-                <div className="mt-4 flex items-center gap-2 text-[11.5px] font-semibold uppercase tracking-wider text-emerald-700">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  ✨ High-Impact STAR Rewrite
+                <div className="mt-4 flex items-center gap-1.5 text-[11.5px] font-semibold uppercase tracking-wider text-emerald-700">
+                  <SparkIcon className="h-3.5 w-3.5 text-emerald-600" />
+                  <span>High-Impact STAR Rewrite</span>
                 </div>
                 <p className="mt-1.5 text-[14px] font-medium leading-relaxed text-[#0d2740]">
                   {item.improvedStarBullet}

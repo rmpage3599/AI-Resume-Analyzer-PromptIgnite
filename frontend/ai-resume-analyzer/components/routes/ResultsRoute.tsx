@@ -78,15 +78,13 @@ export default function ResultsRoute() {
   }
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col bg-[#f8fafc]">
       <TopNav />
-      <main>
-        <ResultsDashboard
-          result={result}
-          jobs={jobs}
-          onNewAnalysis={onNewAnalysis}
-        />
-      </main>
-    </>
+      <ResultsDashboard
+        result={result}
+        jobs={jobs}
+        onNewAnalysis={onNewAnalysis}
+      />
+    </div>
   );
 }

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ErrorNotice } from "@/components/ui/Notice";
+import { TargetIcon, FileTextIcon } from "@/components/core/Icons";
 import AnalyzingView from "./AnalyzingView";
 import RoleSelect from "./RoleSelect";
 import UploadPanel from "./UploadPanel";
@@ -133,13 +134,14 @@ export default function LandingView({
                     setMode("role");
                     setApiError(null);
                   }}
-                  className={`flex-1 rounded-[8px] py-1.5 text-[13px] font-semibold transition ${
+                  className={`flex flex-1 items-center justify-center gap-1.5 rounded-[8px] py-1.5 text-[13px] font-semibold transition ${
                     mode === "role"
                       ? "bg-white text-[#0d47a1] shadow-sm"
                       : "text-[#4f667a] hover:text-[#0d2740]"
                   }`}
                 >
-                  🎯 Predefined Role
+                  <TargetIcon className="h-3.5 w-3.5" />
+                  <span>Predefined Role</span>
                 </button>
                 <button
                   type="button"
@@ -147,13 +149,14 @@ export default function LandingView({
                     setMode("custom");
                     setApiError(null);
                   }}
-                  className={`flex-1 rounded-[8px] py-1.5 text-[13px] font-semibold transition ${
+                  className={`flex flex-1 items-center justify-center gap-1.5 rounded-[8px] py-1.5 text-[13px] font-semibold transition ${
                     mode === "custom"
                       ? "bg-white text-[#0d47a1] shadow-sm"
                       : "text-[#4f667a] hover:text-[#0d2740]"
                   }`}
                 >
-                  📝 Custom Job Description
+                  <FileTextIcon className="h-3.5 w-3.5" />
+                  <span>Custom Job Description</span>
                 </button>
               </div>
 
