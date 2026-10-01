@@ -12,14 +12,13 @@ def load_jobs() -> List[Dict[str, Any]]:
     with open(data_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
-def get_job_by_id(job_id: str) -> Dict[str, Any]:
+def get_job_by_id(job_id: str):
     """Find a specific job role by its unique ID."""
     jobs = load_jobs()
     for job in jobs:
         if job.get("id") == job_id:
             return job
-    # Default to first job if not found
-    return jobs[0] if jobs else {}
+    return None
 
 def match_resume_with_job(
     resume_skills: List[str],
