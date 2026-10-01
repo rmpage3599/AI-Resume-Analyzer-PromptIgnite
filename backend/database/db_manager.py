@@ -99,6 +99,7 @@ def save_analysis(
 
             # Insert analysis
             client.table("resume_analyses").insert({
+                "id": record_id,
                 "resume_id": record_id,
                 "job_role_id": job_role_id,
                 "match_score": match_score,
@@ -204,7 +205,7 @@ def get_history_detail(record_id: str) -> Optional[Dict[str, Any]]:
         try:
             res = client.table("resume_analyses")\
                 .select("*, resumes(*)")\
-                .eq("id", record_id)\
+                .or_(f"id.eq.{record_id},resume_id.eq.{record_id}")\
                 .execute()
             if res.data:
                 item = res.data[0]
