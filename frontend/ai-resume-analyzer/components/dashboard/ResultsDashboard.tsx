@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import MatchedSkillsCard from "./MatchedSkillsCard";
 import MissingSkillsCard from "./MissingSkillsCard";
 import ScorePanel from "./ScorePanel";
@@ -11,6 +11,7 @@ import SuggestionsPanel from "./SuggestionsPanel";
 import StarRewritesPanel from "./StarRewritesPanel";
 import OverallAssessment from "./OverallAssessment";
 import MultiRoleSidebar from "./MultiRoleSidebar";
+import DashboardSidebar, { type DashboardTab } from "./DashboardSidebar";
 import { ResultHeader } from "./ResultHeader";
 import type { AnalysisResult, JobRole } from "@/lib/types";
 
@@ -24,6 +25,8 @@ export default function ResultsDashboard({
   result,
   jobs,
 }: Props) {
+  const [activeTab, setActiveTab] = useState<DashboardTab>("overview");
+
   const role = useMemo(
     () => jobs.find((r) => r.id === result.jobRoleId) ?? jobs[0],
     [jobs, result.jobRoleId],
@@ -37,71 +40,100 @@ export default function ResultsDashboard({
         targetJobTitle={result.targetJobTitle}
       />
 
-      <div className="mt-8 grid gap-8 lg:grid-cols-12 items-start">
-        {/* Main Content Area */}
-        <div className="space-y-6 lg:col-span-8">
-          {/* Top Score & Skills Cards */}
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-12">
-            <div className="xl:col-span-12">
-              <ScorePanel
-                score={result.matchScore}
-                matchedCount={result.matchedSkills.length}
-                totalRequired={
-                  result.matchedSkills.length + result.missingSkills.length
-                }
+      <div className="mt-8 flex flex-col lg:flex-row gap-7 items-start">
+        {/* Left Sidebar Navigation */}
+        <DashboardSidebar
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          candidateName={result.candidate.name}
+          matchScore={result.matchScore}
+        />
+
+        {/* Right Tab Content View (Modular & Compact — No Long Scrolling) */}
+        <main className="flex-1 min-w-0 w-full">
+          {/* TAB 1: OVERVIEW & SCORES */}
+          {activeTab === "overview" && (
+            <div className="space-y-6 anim-fade">
+              <div className="grid gap-5 xl:grid-cols-12 items-stretch">
+                <div className="xl:col-span-5">
+                  <ScorePanel
+                    score={result.matchScore}
+                    matchedCount={result.matchedSkills.length}
+                    totalRequired={
+                      result.matchedSkills.length + result.missingSkills.length
+                    }
+                  />
+                </div>
+                <div className="xl:col-span-7">
+                  <StarRewritesPanel
+                    rubric={result.atsRubric}
+                    atsScore={result.atsScore}
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                <MatchedSkillsCard skills={result.matchedSkills} />
+                <MissingSkillsCard skills={result.missingSkills} />
+              </div>
+            </div>
+          )}
+
+          {/* TAB 2: MULTI-ROLE BENCHMARK */}
+          {activeTab === "multi-role" && (
+            <div className="anim-fade space-y-6">
+              <MultiRoleSidebar
+                comparison={result.multiRoleComparison}
+                candidateName={result.candidate.name}
               />
             </div>
-            <div className="xl:col-span-6">
-              <MatchedSkillsCard skills={result.matchedSkills} />
+          )}
+
+          {/* TAB 3: AI IMPROVEMENTS & STAR REWRITES */}
+          {activeTab === "improvements" && (
+            <div className="space-y-6 anim-fade">
+              <SuggestionsPanel suggestions={result.suggestions} />
+              {result.starRewrites && result.starRewrites.length > 0 && (
+                <StarRewritesPanel
+                  starRewrites={result.starRewrites}
+                />
+              )}
             </div>
-            <div className="xl:col-span-6">
-              <MissingSkillsCard skills={result.missingSkills} />
+          )}
+
+          {/* TAB 4: SKILL ALIGNMENT & GAPS */}
+          {activeTab === "skills" && (
+            <div className="space-y-6 anim-fade">
+              <SkillAlignmentPanel
+                matched={result.matchedSkills}
+                missing={result.missingSkills}
+                skills={result.skills}
+              />
+              <div className="grid gap-5 sm:grid-cols-2">
+                <MatchedSkillsCard skills={result.matchedSkills} />
+                <MissingSkillsCard skills={result.missingSkills} />
+              </div>
             </div>
-          </div>
+          )}
 
-          <div>
-            <SkillAlignmentPanel
-              matched={result.matchedSkills}
-              missing={result.missingSkills}
-              skills={result.skills}
-            />
-          </div>
-
-          <div className="grid gap-5 sm:grid-cols-2">
-            <EducationPanel education={result.education} />
-            <ExperiencePanel experience={result.experience} />
-          </div>
-
-          <div>
-            <SuggestionsPanel suggestions={result.suggestions} />
-          </div>
-
-          <div>
-            <StarRewritesPanel
-              rubric={result.atsRubric}
-              starRewrites={result.starRewrites}
-              atsScore={result.atsScore}
-            />
-          </div>
-
-          <div>
-            <OverallAssessment result={result} role={role} />
-          </div>
-        </div>
-
-        {/* Multi-Role Benchmark Sidebar */}
-        <div className="lg:col-span-4 lg:sticky lg:top-24 space-y-5">
-          <MultiRoleSidebar
-            comparison={result.multiRoleComparison}
-            candidateName={result.candidate.name}
-          />
-        </div>
+          {/* TAB 5: EXPERIENCE, EDUCATION & REPORT */}
+          {activeTab === "experience" && (
+            <div className="space-y-6 anim-fade">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <EducationPanel education={result.education} />
+                <ExperiencePanel experience={result.experience} />
+              </div>
+              <OverallAssessment result={result} role={role} />
+            </div>
+          )}
+        </main>
       </div>
 
-      <p className="mt-10 text-center text-[11.5px] text-[#7890a4]">
+      <p className="mt-12 text-center text-[11.5px] text-[#7890a4]">
         Resumind processes your resume temporarily and does not store your data.
       </p>
     </div>
   );
 }
+
 
