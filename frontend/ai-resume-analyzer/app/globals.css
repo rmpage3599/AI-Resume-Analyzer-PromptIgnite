@@ -397,6 +397,57 @@
   font-family: var(--font-mono);
 }
 
+/* =====================================================================
+   Resume enhancement — print stylesheet
+   ===================================================================== */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000 !important;
+  }
+
+  /* Hide the entire app shell except the print root. */
+  body * {
+    visibility: hidden;
+  }
+  #resume-print-root,
+  #resume-print-root * {
+    visibility: visible;
+  }
+
+  #resume-print-root {
+    position: absolute;
+    inset: 0;
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 0;
+  }
+
+  #resume-print-root .resume-doc {
+    aspect-ratio: auto !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+}
+
+/* Hide the print root on screen — it's only meant for printing. */
+.print-only-root {
+  position: fixed;
+  left: -10000px;
+  top: 0;
+  width: 210mm;
+  pointer-events: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

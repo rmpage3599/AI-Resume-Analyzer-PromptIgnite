@@ -10,6 +10,7 @@ import ExperiencePanel from "./ExperiencePanel";
 import SuggestionsPanel from "./SuggestionsPanel";
 import StarRewritesPanel from "./StarRewritesPanel";
 import OverallAssessment from "./OverallAssessment";
+import EnhancementCard from "./EnhancementCard";
 import { ResultHeader } from "./ResultHeader";
 import type { AnalysisResult, JobRole } from "@/lib/types";
 
@@ -87,6 +88,10 @@ export default function ResultsDashboard({
 
       <div className="mt-5">
         <OverallAssessment result={result} role={role} />
+
+        <div className="mt-5">
+          <EnhancementCard />
+        </div>
 
         <p className="mt-6 text-center text-[11.5px] text-[#7890a4]">
           Resumind processes your resume temporarily and does not store your
