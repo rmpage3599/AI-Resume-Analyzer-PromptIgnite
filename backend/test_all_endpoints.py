@@ -27,7 +27,7 @@ def test_all_endpoints():
     res = client.get("/api/jobs")
     assert res.status_code == 200, f"Expected 200, got {res.status_code}"
     jobs_data = res.json()
-    assert isinstance(jobs_data, list) and len(jobs_data) == 5
+    assert isinstance(jobs_data, list) and len(jobs_data) == 12
     print(f" Status: {res.status_code}")
     print(f" Total Jobs Returned: {len(jobs_data)}")
 
