@@ -1,0 +1,228 @@
+{
+  "GET /api/health": {
+    "status": 200,
+    "data": {
+      "status": "healthy",
+      "service": "AI Resume Analyzer Backend",
+      "supabase_configured": false
+    }
+  },
+  "GET /api/jobs": {
+    "status": 200,
+    "data": [
+      {
+        "id": "aiml-engineer",
+        "title": "AI/ML Engineer",
+        "requiredSkills": [
+          "Python",
+          "Machine Learning",
+          "NumPy",
+          "Pandas",
+          "Scikit-learn"
+        ],
+        "preferredSkills": [
+          "TensorFlow",
+          "PyTorch",
+          "Deep Learning",
+          "NLP",
+          "Computer Vision",
+          "Docker"
+        ],
+        "description": "Develop and deploy machine learning models, analyze complex datasets, and build intelligent algorithms for production applications."
+      },
+      {
+        "id": "frontend-developer",
+        "title": "Frontend Developer",
+        "requiredSkills": [
+          "JavaScript",
+          "TypeScript",
+          "React",
+          "HTML",
+          "CSS",
+          "Tailwind CSS"
+        ],
+        "preferredSkills": [
+          "Next.js",
+          "Redux",
+          "GraphQL",
+          "REST APIs",
+          "Responsive Design",
+          "Jest"
+        ],
+        "description": "Build high-performance, accessible, and responsive user interfaces for modern web applications using React and Next.js."
+      },
+      {
+        "id": "backend-developer",
+        "title": "Backend Developer",
+        "requiredSkills": [
+          "Python",
+          "Node.js",
+          "SQL",
+          "PostgreSQL",
+          "REST APIs"
+        ],
+        "preferredSkills": [
+          "FastAPI",
+          "Express",
+          "Docker",
+          "Redis",
+          "MongoDB",
+          "Microservices",
+          "AWS"
+        ],
+        "description": "Architect scalable backend services, design robust APIs, optimize database queries, and ensure server security."
+      },
+      {
+        "id": "fullstack-developer",
+        "title": "Full Stack Developer",
+        "requiredSkills": [
+          "JavaScript",
+          "TypeScript",
+          "React",
+          "Node.js",
+          "SQL",
+          "Git"
+        ],
+        "preferredSkills": [
+          "Next.js",
+          "PostgreSQL",
+          "Docker",
+          "AWS",
+          "Tailwind CSS",
+          "REST APIs"
+        ],
+        "description": "Deliver end-to-end web applications bridging frontend user experience with reliable backend microservices and databases."
+      },
+      {
+        "id": "data-analyst",
+        "title": "Data Analyst",
+        "requiredSkills": [
+          "SQL",
+          "Excel",
+          "Python",
+          "Power BI",
+          "Data Visualization"
+        ],
+        "preferredSkills": [
+          "Tableau",
+          "Pandas",
+          "NumPy",
+          "Statistics",
+          "ETL",
+          "Business Intelligence"
+        ],
+        "description": "Transform raw business data into actionable insights, interactive dashboards, and strategic performance reports."
+      }
+    ]
+  },
+  "POST /api/analyze (aiml-engineer)": {
+    "status": 200,
+    "data": {
+      "candidate": {
+        "name": "Alex Chen"
+      },
+      "skills": [
+        "Data Analysis",
+        "Docker",
+        "ETL",
+        "Git",
+        "GitHub",
+        "Linux",
+        "Machine Learning",
+        "Matplotlib",
+        "NumPy",
+        "Pandas",
+        "Predictive Modeling",
+        "Python",
+        "REST APIs",
+        "Scikit-learn",
+        "SQL"
+      ],
+      "education": [
+        {
+          "degree": "B.Tech in Computer Science and Engineering",
+          "institution": "State University of Technology | 2019 - 2023",
+          "duration": "2019"
+        }
+      ],
+      "experience": [
+        {
+          "role": "Machine Learning Engineer - TechCorp Solutions",
+          "company": "Technology Company",
+          "duration": "1-2 years"
+        }
+      ],
+      "matchedSkills": [
+        "Python",
+        "Machine Learning",
+        "NumPy",
+        "Pandas",
+        "Scikit-learn",
+        "Docker"
+      ],
+      "missingSkills": [],
+      "matchScore": 83,
+      "suggestions": [
+        "Quantify your accomplishments using the STAR method (e.g., 'Improved API latency by 35%' or 'Reduced cloud costs by $12K').",
+        "Tailor your resume summary and headline specifically for the 'AI/ML Engineer' position to pass ATS keyword filters."
+      ]
+    }
+  },
+  "POST /api/analyze (frontend-developer)": {
+    "status": 200,
+    "data": {
+      "candidate": {
+        "name": "Alex Chen"
+      },
+      "skills": [
+        "Data Analysis",
+        "Docker",
+        "ETL",
+        "Git",
+        "GitHub",
+        "Linux",
+        "Machine Learning",
+        "Matplotlib",
+        "NumPy",
+        "Pandas",
+        "Predictive Modeling",
+        "Python",
+        "REST APIs",
+        "Scikit-learn",
+        "SQL"
+      ],
+      "education": [
+        {
+          "degree": "B.Tech in Computer Science and Engineering",
+          "institution": "State University of Technology | 2019 - 2023",
+          "duration": "2019"
+        }
+      ],
+      "experience": [
+        {
+          "role": "Machine Learning Engineer - TechCorp Solutions",
+          "company": "Technology Company",
+          "duration": "1-2 years"
+        }
+      ],
+      "matchedSkills": [
+        "REST APIs"
+      ],
+      "missingSkills": [
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "HTML",
+        "CSS",
+        "Tailwind CSS"
+      ],
+      "matchScore": 10,
+      "suggestions": [
+        "Gain hands-on proficiency in critical role requirements: JavaScript, TypeScript. Build a portfolio project demonstrating their usage.",
+        "Consider completing a verified certification or online workshop in React to bridge the qualification gap.",
+        "Quantify your accomplishments using the STAR method (e.g., 'Improved API latency by 35%' or 'Reduced cloud costs by $12K').",
+        "Tailor your resume summary and headline specifically for the 'Frontend Developer' position to pass ATS keyword filters."
+      ]
+    }
+  }
+}

@@ -1,0 +1,105 @@
+[
+  {
+    "id": "aiml-engineer",
+    "title": "AI/ML Engineer",
+    "requiredSkills": [
+      "Python",
+      "Machine Learning",
+      "NumPy",
+      "Pandas",
+      "Scikit-learn"
+    ],
+    "preferredSkills": [
+      "TensorFlow",
+      "PyTorch",
+      "Deep Learning",
+      "NLP",
+      "Computer Vision",
+      "Docker"
+    ],
+    "description": "Develop and deploy machine learning models, analyze complex datasets, and build intelligent algorithms for production applications."
+  },
+  {
+    "id": "frontend-developer",
+    "title": "Frontend Developer",
+    "requiredSkills": [
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "HTML",
+      "CSS",
+      "Tailwind CSS"
+    ],
+    "preferredSkills": [
+      "Next.js",
+      "Redux",
+      "GraphQL",
+      "REST APIs",
+      "Responsive Design",
+      "Jest"
+    ],
+    "description": "Build high-performance, accessible, and responsive user interfaces for modern web applications using React and Next.js."
+  },
+  {
+    "id": "backend-developer",
+    "title": "Backend Developer",
+    "requiredSkills": [
+      "Python",
+      "Node.js",
+      "SQL",
+      "PostgreSQL",
+      "REST APIs"
+    ],
+    "preferredSkills": [
+      "FastAPI",
+      "Express",
+      "Docker",
+      "Redis",
+      "MongoDB",
+      "Microservices",
+      "AWS"
+    ],
+    "description": "Architect scalable backend services, design robust APIs, optimize database queries, and ensure server security."
+  },
+  {
+    "id": "fullstack-developer",
+    "title": "Full Stack Developer",
+    "requiredSkills": [
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Node.js",
+      "SQL",
+      "Git"
+    ],
+    "preferredSkills": [
+      "Next.js",
+      "PostgreSQL",
+      "Docker",
+      "AWS",
+      "Tailwind CSS",
+      "REST APIs"
+    ],
+    "description": "Deliver end-to-end web applications bridging frontend user experience with reliable backend microservices and databases."
+  },
+  {
+    "id": "data-analyst",
+    "title": "Data Analyst",
+    "requiredSkills": [
+      "SQL",
+      "Excel",
+      "Python",
+      "Power BI",
+      "Data Visualization"
+    ],
+    "preferredSkills": [
+      "Tableau",
+      "Pandas",
+      "NumPy",
+      "Statistics",
+      "ETL",
+      "Business Intelligence"
+    ],
+    "description": "Transform raw business data into actionable insights, interactive dashboards, and strategic performance reports."
+  }
+]

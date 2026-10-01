@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.env
+.env
+venv/
+.venv/
+
+# Next.js / Node
+node_modules/
+.next/
+out/
+build/
+dist/
+
+# IDE & Tooling
+.omo/
+.vscode/
+.idea/
+*.log
+*.db
+*.sqlite3
+*.sqlite
+.DS_Store
