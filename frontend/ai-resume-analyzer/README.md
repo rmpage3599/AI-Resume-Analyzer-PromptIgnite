@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Resumind — AI Resume Intelligence (Frontend)
 
-## Getting Started
+Phase 1 MVP frontend for an AI-powered resume analyzer.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 (App Router) + React 19 + TypeScript
+- Tailwind CSS v4
+- No backend, no database — everything is processed in-memory.
+
+## Run
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Architecture
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+app/
+  layout.tsx            Root layout, fonts (Geist), global background
+  page.tsx              Renders the client <App /> orchestrator
+  globals.css           Tailwind v4 theme + keyframes + component classes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+components/
+  App.tsx               Stage switcher (analyze ↔ results)
+  background/
+    TechnicalBackground.tsx   Animated grid, curved data lines, particles
+  core/
+    Icons.tsx           Inline SVG icon set
+  shell/
+    BrandMark.tsx
+    TopNav.tsx          RESUMIND · Analyze / Dashboard / History
+  landing/
+    LandingView.tsx     Hero + workbench panel (upload + role + CTA)
+    UploadPanel.tsx     Drag-drop, validation, selected-file state
+    RoleSelect.tsx      Accessible custom listbox (5 roles)
+    AnalyzingView.tsx   5-stage processing animation
+    PipelineStrip.tsx
+  dashboard/
+    Sidebar.tsx         5-item analytics sidebar with scroll-spy
+    DashboardTopBar.tsx
+    ScorePanel.tsx      Animated ring + count-up + verdict
+    MatchedSkillsCard.tsx
+    MissingSkillsCard.tsx
+    SkillAlignmentPanel.tsx  Horizontal skill bars
+    EducationPanel.tsx
+    ExperiencePanel.tsx Vertical timeline
+    SkillGapsPanel.tsx
+    SuggestionsPanel.tsx    Numbered recommendations
+    OverallAssessment.tsx   Downloadable text report (client-side)
+    ResultsDashboard.tsx
 
-## Learn More
+lib/
+  cn.ts                 Classname helper
+  types.ts              Wire + UI types
+  jobRoles.ts           5 predefined Phase 1 roles
+  mockData.ts           Per-role realistic mock analysis
+  analyze.ts            API client + normalizer + validation
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Connecting the real `/api/analyze` endpoint
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Set in `.env.local`:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+NEXT_PUBLIC_ANALYZE_MODE=live
+```
 
-## Deploy on Vercel
+When set to `live`, the frontend POSTs the resume to `/api/analyze`:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+POST /api/analyze
+Content-Type: multipart/form-data
+Fields:
+  - resume:  the PDF file
+  - jobRole: one of frontend | backend | fullstack | ai-ml | data-analyst
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Expected response (loose — see `lib/types.ts → AnalyzeWireResponse`):
+
+```jsonc
+{
+  "candidate":   { "name": "Jordan Mercer" },
+  "skills":      ["Python", "Pandas", ...],
+  "matchedSkills": [...],
+  "missingSkills": [...],
+  "matchScore":  78,
+  "suggestions": ["Title: detail", { "title": "...", "detail": "..." }],
+  "education":   [{ "degree": "...", "institution": "...", "period": "..." }],
+  "experience":  [{ "role": "...", "company": "...", "period": "...", "note": "..." }],
+  "alignment":   [{ "name": "Python", "value": 95 }, ...],   // optional
+  "weakSkills":  [{ "name": "Deep Learning", "value": 30 }], // optional
+  "assessment":  "...",                                       // optional
+  "requirements": { "matched": 7, "total": 9 }                // optional
+}
+```
+
+`lib/analyze.ts → normalizeAnalysis` accepts both string and object suggestions,
+fills in derived fields when the API omits them, and surfaces a typed
+`AnalysisResult` to the UI.
+
+In `mock` mode (default), the UI uses deterministic, role-tuned demo data so
+the loading animation and dashboard visuals can be shown during the demo
+without a backend.
