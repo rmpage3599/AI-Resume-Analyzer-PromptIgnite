@@ -2,104 +2,85 @@
   {
     "id": "aiml-engineer",
     "title": "AI/ML Engineer",
-    "requiredSkills": [
-      "Python",
-      "Machine Learning",
-      "NumPy",
-      "Pandas",
-      "Scikit-learn"
-    ],
-    "preferredSkills": [
-      "TensorFlow",
-      "PyTorch",
-      "Deep Learning",
-      "NLP",
-      "Computer Vision",
-      "Docker"
-    ],
+    "requiredSkills": ["Python", "Machine Learning", "NumPy", "Pandas", "Scikit-learn"],
+    "preferredSkills": ["TensorFlow", "PyTorch", "Deep Learning", "NLP", "Computer Vision", "Docker", "MLOps", "Transformers"],
     "description": "Develop and deploy machine learning models, analyze complex datasets, and build intelligent algorithms for production applications."
   },
   {
+    "id": "data-scientist",
+    "title": "Data Scientist",
+    "requiredSkills": ["Python", "SQL", "Statistics", "Machine Learning", "Pandas", "Data Analysis"],
+    "preferredSkills": ["R", "Scikit-learn", "NumPy", "A/B Testing", "Data Visualization", "Matplotlib", "Seaborn", "BigQuery"],
+    "description": "Extract actionable business insights using statistical modeling, hypothesis testing, predictive analytics, and machine learning."
+  },
+  {
+    "id": "data-analyst",
+    "title": "Data Analyst / BI Specialist",
+    "requiredSkills": ["SQL", "Excel", "Python", "Power BI", "Data Visualization"],
+    "preferredSkills": ["Tableau", "Pandas", "NumPy", "Statistics", "ETL", "Data Warehousing", "Snowflake", "DAX"],
+    "description": "Transform raw business data into actionable insights, interactive dashboards, and strategic performance reports."
+  },
+  {
     "id": "frontend-developer",
-    "title": "Frontend Developer",
-    "requiredSkills": [
-      "JavaScript",
-      "TypeScript",
-      "React",
-      "HTML",
-      "CSS",
-      "Tailwind CSS"
-    ],
-    "preferredSkills": [
-      "Next.js",
-      "Redux",
-      "GraphQL",
-      "REST APIs",
-      "Responsive Design",
-      "Jest"
-    ],
+    "title": "Frontend Developer (React / Next.js)",
+    "requiredSkills": ["JavaScript", "TypeScript", "React", "HTML", "CSS", "Tailwind CSS"],
+    "preferredSkills": ["Next.js", "Redux", "GraphQL", "REST APIs", "Responsive Design", "Jest", "Vite", "Webpack"],
     "description": "Build high-performance, accessible, and responsive user interfaces for modern web applications using React and Next.js."
   },
   {
-    "id": "backend-developer",
-    "title": "Backend Developer",
-    "requiredSkills": [
-      "Python",
-      "Node.js",
-      "SQL",
-      "PostgreSQL",
-      "REST APIs"
-    ],
-    "preferredSkills": [
-      "FastAPI",
-      "Express",
-      "Docker",
-      "Redis",
-      "MongoDB",
-      "Microservices",
-      "AWS"
-    ],
+    "id": "backend-python",
+    "title": "Backend Developer (Python / FastAPI)",
+    "requiredSkills": ["Python", "FastAPI", "SQL", "PostgreSQL", "REST APIs"],
+    "preferredSkills": ["Django", "Flask", "Docker", "Redis", "Celery", "SQLAlchemy", "Microservices", "AWS"],
     "description": "Architect scalable backend services, design robust APIs, optimize database queries, and ensure server security."
+  },
+  {
+    "id": "backend-node",
+    "title": "Backend Developer (Node.js / Express)",
+    "requiredSkills": ["JavaScript", "TypeScript", "Node.js", "Express", "REST APIs"],
+    "preferredSkills": ["NestJS", "PostgreSQL", "MongoDB", "Redis", "Docker", "Microservices", "GraphQL", "Jest"],
+    "description": "Develop high-throughput asynchronous backend systems, event-driven architectures, and microservices."
   },
   {
     "id": "fullstack-developer",
     "title": "Full Stack Developer",
-    "requiredSkills": [
-      "JavaScript",
-      "TypeScript",
-      "React",
-      "Node.js",
-      "SQL",
-      "Git"
-    ],
-    "preferredSkills": [
-      "Next.js",
-      "PostgreSQL",
-      "Docker",
-      "AWS",
-      "Tailwind CSS",
-      "REST APIs"
-    ],
+    "requiredSkills": ["JavaScript", "TypeScript", "React", "Node.js", "SQL", "Git"],
+    "preferredSkills": ["Next.js", "PostgreSQL", "MongoDB", "Docker", "AWS", "Tailwind CSS", "REST APIs", "CI/CD"],
     "description": "Deliver end-to-end web applications bridging frontend user experience with reliable backend microservices and databases."
   },
   {
-    "id": "data-analyst",
-    "title": "Data Analyst",
-    "requiredSkills": [
-      "SQL",
-      "Excel",
-      "Python",
-      "Power BI",
-      "Data Visualization"
-    ],
-    "preferredSkills": [
-      "Tableau",
-      "Pandas",
-      "NumPy",
-      "Statistics",
-      "ETL",
-      "Business Intelligence"
-    ],
-    "description": "Transform raw business data into actionable insights, interactive dashboards, and strategic performance reports."
+    "id": "devops-engineer",
+    "title": "DevOps & Cloud Engineer",
+    "requiredSkills": ["Linux", "Docker", "Kubernetes", "AWS", "CI/CD", "Git"],
+    "preferredSkills": ["Terraform", "Ansible", "Jenkins", "GitHub Actions", "Azure", "GCP", "Prometheus", "Grafana", "Bash"],
+    "description": "Automate deployment pipelines, manage scalable cloud infrastructure, and ensure high system reliability and security."
+  },
+  {
+    "id": "mobile-developer",
+    "title": "Mobile App Developer",
+    "requiredSkills": ["JavaScript", "TypeScript", "React Native", "Mobile Development", "REST APIs"],
+    "preferredSkills": ["Flutter", "Dart", "Swift", "Kotlin", "iOS", "Android", "Redux", "Firebase", "App Store Deployment"],
+    "description": "Build and publish cross-platform mobile applications with smooth native performance, offline storage, and clean UI."
+  },
+  {
+    "id": "cybersecurity-analyst",
+    "title": "Cybersecurity Analyst",
+    "requiredSkills": ["Network Security", "Linux", "Python", "Vulnerability Assessment", "Information Security"],
+    "preferredSkills": ["SIEM", "Penetration Testing", "Wireshark", "OWASP", "Firewalls", "Incident Response", "Cryptography"],
+    "description": "Monitor and defend networks, identify system vulnerabilities, conduct penetration tests, and enforce security policies."
+  },
+  {
+    "id": "qa-automation-engineer",
+    "title": "QA & Automation Engineer",
+    "requiredSkills": ["Python", "Selenium", "Test Automation", "QA", "Manual Testing"],
+    "preferredSkills": ["Playwright", "Cypress", "PyTest", "API Testing", "Postman", "Jenkins", "Jira", "CI/CD"],
+    "description": "Design automated test suites, execute end-to-end integration tests, and ensure bug-free software releases."
+  },
+  {
+    "id": "technical-product-manager",
+    "title": "Technical Product Manager",
+    "requiredSkills": ["Product Management", "Agile", "Scrum", "Data Analysis", "Roadmapping"],
+    "preferredSkills": ["SQL", "Jira", "A/B Testing", "System Design", "User Research", "Wireframing", "REST APIs"],
+    "description": "Bridge engineering, design, and business strategy to define product vision, prioritize sprint backlogs, and launch features."
   }
 ]

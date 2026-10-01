@@ -2,36 +2,13 @@ import re
 import fitz  # PyMuPDF
 import docx
 import io
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Optional
+from utils.skills_db import SKILL_ALIASES, normalize_skill
 
-# Curated comprehensive skills dictionary grouped by domains
-COMMON_SKILLS = [
-    # Programming Languages
-    "Python", "JavaScript", "TypeScript", "Java", "C++", "C#", "C", "Go", "Golang", "Rust",
-    "PHP", "Ruby", "Swift", "Kotlin", "Scala", "R", "Dart", "Bash", "Shell", "SQL",
-    # Frontend
-    "React", "React.js", "Next.js", "Vue", "Vue.js", "Angular", "HTML", "HTML5", "CSS", "CSS3",
-    "Tailwind CSS", "Bootstrap", "Sass", "Redux", "Redux Toolkit", "GraphQL", "REST APIs",
-    "Webpack", "Vite", "Material UI", "Chakra UI", "Responsive Design",
-    # Backend & Frameworks
-    "Node.js", "Express", "Express.js", "FastAPI", "Flask", "Django", "Spring Boot",
-    "ASP.NET", "Ruby on Rails", "NestJS", "Microservices", "RESTful APIs", "gRPC", "WebSocket",
-    # AI / Machine Learning & Data Science
-    "Machine Learning", "Deep Learning", "Artificial Intelligence", "NumPy", "Pandas",
-    "Scikit-learn", "TensorFlow", "Keras", "PyTorch", "OpenCV", "NLP", "Natural Language Processing",
-    "Computer Vision", "Transformers", "Hugging Face", "LLMs", "Large Language Models", "LangChain",
-    "Data Analysis", "Data Visualization", "Matplotlib", "Seaborn", "Statistics", "Predictive Modeling",
-    # Databases & Storage
-    "PostgreSQL", "MySQL", "MongoDB", "SQLite", "Redis", "Supabase", "Firebase",
-    "DynamoDB", "Cassandra", "Elasticsearch", "Prisma", "SQLAlchemy", "Firestore",
-    # Cloud & DevOps
-    "Git", "GitHub", "GitLab", "Docker", "Kubernetes", "AWS", "Amazon Web Services",
-    "Azure", "Google Cloud", "GCP", "CI/CD", "Linux", "Terraform", "Nginx", "Jenkins",
-    # Analytics & Business Intelligence
-    "Power BI", "Tableau", "Excel", "Advanced Excel", "ETL", "Data Warehousing", "Snowflake", "BigQuery",
-    # Methodologies & Soft Skills
-    "Agile", "Scrum", "Problem Solving", "Communication", "Leadership", "Teamwork"
-]
+EMAIL_REGEX = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b"
+PHONE_REGEX = r"(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}|\+?\d{1,4}[-.\s]?\d{10}"
+LINKEDIN_REGEX = r"(?:https?:\/\/)?(?:www\.)?linkedin\.com\/in\/[A-Za-z0-9_-]+"
+GITHUB_REGEX = r"(?:https?:\/\/)?(?:www\.)?github\.com\/[A-Za-z0-9_-]+"
 
 DEGREE_PATTERNS = [
     r"(?i)\b(b\.?tech|bachelor of technology|b\.?e\.?|bachelor of engineering)\b",
@@ -70,42 +47,65 @@ def extract_text_from_docx(file_input) -> str:
     doc = docx.Document(file_input)
     return "\n".join([para.text for para in doc.paragraphs if para.text.strip()]).strip()
 
+def extract_contact_info(text: str) -> Dict[str, Optional[str]]:
+    """Extract candidate email, phone, and professional profile links."""
+    # Email
+    email_match = re.search(EMAIL_REGEX, text)
+    email = email_match.group(0) if email_match else None
+
+    # Phone
+    phone_match = re.search(PHONE_REGEX, text)
+    phone = phone_match.group(0).strip() if phone_match else None
+
+    # Links
+    linkedin_match = re.search(LINKEDIN_REGEX, text, re.IGNORECASE)
+    linkedin = linkedin_match.group(0) if linkedin_match else None
+
+    github_match = re.search(GITHUB_REGEX, text, re.IGNORECASE)
+    github = github_match.group(0) if github_match else None
+
+    return {
+        "email": email,
+        "phone": phone,
+        "linkedin": linkedin,
+        "github": github
+    }
+
 def extract_candidate_name(text: str) -> str:
-    """Extract candidate name using clean line heuristics."""
+    """Extract candidate name using line and header heuristics."""
     lines = [line.strip() for line in text.split("\n") if line.strip()]
     if not lines:
         return "Candidate"
 
-    for line in lines[:5]:
-        # Filter out common headers, emails, phones, URLs
-        if any(keyword in line.lower() for keyword in ["resume", "curriculum", "cv", "email", "phone", "github", "linkedin", "http", "@"]):
+    for line in lines[:6]:
+        # Skip headers, contact lines, URLs
+        if any(keyword in line.lower() for keyword in ["resume", "curriculum", "cv", "email", "phone", "github", "linkedin", "http", "@", "+"]):
             continue
-        # Names are typically 2 to 4 capitalized words, no digits
-        if 2 <= len(line.split()) <= 4 and not re.search(r"\d", line) and len(line) < 40:
+        # Names are typically 2 to 4 capitalized words, no numbers
+        words = line.split()
+        if 2 <= len(words) <= 4 and not re.search(r"\d", line) and len(line) < 35:
             return line
     return lines[0] if lines else "Candidate"
 
 def extract_skills(text: str) -> List[str]:
-    """Identify skills from text using boundary-safe regex matching against taxonomy."""
+    """Identify skills from text using boundary-safe regex matching and alias normalization."""
     found_skills = set()
     text_lower = text.lower()
 
-    for skill in COMMON_SKILLS:
-        skill_lower = skill.lower()
-        # Word boundary match with special character escaping
-        pattern = r"(?<!\w)" + re.escape(skill_lower) + r"(?!\w)"
+    for alias, standard_name in SKILL_ALIASES.items():
+        # Match with word boundaries or special character boundaries
+        pattern = r"(?<![a-zA-Z0-9_])" + re.escape(alias) + r"(?![a-zA-Z0-9_])"
         if re.search(pattern, text_lower):
-            found_skills.add(skill)
+            found_skills.add(standard_name)
 
-    # Sort alphabetically for consistency
     return sorted(list(found_skills), key=lambda s: s.lower())
 
 def extract_education(text: str) -> List[Dict[str, str]]:
-    """Extract education entries like degree, field, institution, and year."""
+    """Extract education entries like degree, field, institution, year, and GPA."""
     education_entries = []
     lines = [line.strip() for line in text.split("\n") if line.strip()]
     
-    # Locate education section if present
+    # Locate education section
     edu_section_lines = []
     in_edu = False
     for line in lines:
@@ -129,29 +129,28 @@ def extract_education(text: str) -> List[Dict[str, str]]:
                 break
         
         if degree_match:
-            # Look for institution and year in current or subsequent lines
             institution = "University / College"
-            year = ""
+            duration = "Completed"
             
-            # Check for year (e.g. 2020-2024 or 2023)
-            year_match = re.search(r"\b(20\d{2}|19\d{2})\b", line)
+            # Check year
+            year_match = re.search(r"\b(20\d{2}|19\d{2})(?:\s*[-–]\s*(?:20\d{2}|present))?\b", line, re.IGNORECASE)
             if year_match:
-                year = year_match.group(1)
+                duration = year_match.group(0)
 
-            # Check next line for institution if present
+            # Check next line for institution or GPA
             if i + 1 < len(search_pool):
                 next_line = search_pool[i + 1]
-                if any(k in next_line.lower() for k in ["university", "college", "institute", "school", "academy"]):
+                if any(k in next_line.lower() for k in ["university", "college", "institute", "school", "academy", "campus"]):
                     institution = next_line
-                    if not year:
-                        y_match = re.search(r"\b(20\d{2}|19\d{2})\b", next_line)
+                    if duration == "Completed":
+                        y_match = re.search(r"\b(20\d{2}|19\d{2})(?:\s*[-–]\s*(?:20\d{2}|present))?\b", next_line, re.IGNORECASE)
                         if y_match:
-                            year = y_match.group(1)
-            
+                            duration = y_match.group(0)
+
             education_entries.append({
                 "degree": degree_match,
                 "institution": institution,
-                "duration": year if year else "N/A"
+                "duration": duration
             })
             if len(education_entries) >= 3:
                 break
@@ -165,8 +164,8 @@ def extract_education(text: str) -> List[Dict[str, str]]:
 
     return education_entries
 
-def extract_experience(text: str) -> List[Dict[str, str]]:
-    """Extract job roles, companies, and durations from experience section."""
+def extract_experience(text: str) -> List[Dict[str, Any]]:
+    """Extract job roles, companies, durations, and bullet-point achievements."""
     experience_entries = []
     lines = [line.strip() for line in text.split("\n") if line.strip()]
 
@@ -185,40 +184,50 @@ def extract_experience(text: str) -> List[Dict[str, str]]:
 
     target_lines = exp_lines if exp_lines else lines
 
-    # Look for role and company patterns
     role_keywords = ["engineer", "developer", "analyst", "intern", "manager", "specialist", "scientist", "consultant", "lead", "architect"]
     
+    current_entry = None
     for i, line in enumerate(target_lines):
-        if any(rk in line.lower() for rk in role_keywords) and len(line.split()) <= 8:
-            role = line
-            company = "Technology Company"
-            duration = "1-2 years"
+        is_role = any(rk in line.lower() for rk in role_keywords) and len(line.split()) <= 9 and not line.startswith("-")
 
-            # Check for duration / dates in current line or neighboring lines
-            date_match = re.search(r"(?i)\b(20\d{2}|present|current|\d+\s*(?:years?|yrs?|months?))\b", line)
+        if is_role:
+            if current_entry:
+                experience_entries.append(current_entry)
+                if len(experience_entries) >= 4:
+                    current_entry = None
+                    break
+
+            duration = "1-2 years"
+            date_match = re.search(r"(?i)\b((?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)?\s*20\d{2}\s*[-–]\s*(?:present|current|20\d{2}))\b", line)
             if date_match:
                 duration = date_match.group(0)
 
-            # Look around for company name
+            company = "Technology Organization"
             if i + 1 < len(target_lines):
                 next_l = target_lines[i + 1]
-                if not any(rk in next_l.lower() for rk in role_keywords) and len(next_l.split()) <= 6:
+                if not any(rk in next_l.lower() for rk in role_keywords) and not next_l.startswith(("-", "•")):
                     company = next_l
 
-            experience_entries.append({
-                "role": role,
+            current_entry = {
+                "role": line,
                 "company": company,
-                "duration": duration
-            })
+                "duration": duration,
+                "bullets": []
+            }
+        elif current_entry and (line.startswith(("-", "•", "*")) or len(line.split()) > 7):
+            bullet_text = line.lstrip("-•* ").strip()
+            if bullet_text and len(current_entry["bullets"]) < 4:
+                current_entry["bullets"].append(bullet_text)
 
-            if len(experience_entries) >= 4:
-                break
+    if current_entry:
+        experience_entries.append(current_entry)
 
     if not experience_entries:
         experience_entries.append({
             "role": "Software / Technical Experience",
             "company": "Industry Experience",
-            "duration": "Demonstrated Projects"
+            "duration": "Demonstrated Projects",
+            "bullets": ["Delivered software projects and technical solutions in alignment with industry standards."]
         })
 
     return experience_entries
