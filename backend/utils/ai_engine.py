@@ -28,6 +28,7 @@ def analyze_resume_pipeline(
     experience = extract_experience(resume_text)
 
     # 2. Determine Job Matching Strategy
+    job_field = "Software Engineering"
     if custom_jd_text and custom_jd_text.strip():
         matching_result = match_resume_with_custom_jd(skills, resume_text, custom_jd_text)
         job_title = "Custom Job Description"
@@ -38,6 +39,7 @@ def analyze_resume_pipeline(
             raise ValueError(f"Job role '{role_id}' not found.")
         matching_result = match_resume_with_job(skills, resume_text, job_data)
         job_title = job_data.get("title", "Selected Role")
+        job_field = job_data.get("field", "Software Engineering")
 
     match_score = matching_result["matchScore"]
     matched_skills = matching_result["matchedSkills"]
@@ -100,15 +102,16 @@ def analyze_resume_pipeline(
         "education": education,
         "experience": experience,
         "suggestions": suggestions,
+        "field": job_field,
         "aiEnhanced": ai_enhancements is not None
     }
 
     if ai_enhancements and "starRewrites" in ai_enhancements:
         response_payload["starRewrites"] = ai_enhancements["starRewrites"]
 
-    # 7. Compute Multi-Role Benchmark across all 12 roles
+    # 7. Compute Multi-Role Benchmark within the selected field/domain
     try:
-        response_payload["multiRoleComparison"] = compare_multiple_roles(skills, resume_text)
+        response_payload["multiRoleComparison"] = compare_multiple_roles(skills, resume_text, field=job_field)
     except Exception as e:
         print(f"[Multi-Role] Benchmark skipped: {e}")
 

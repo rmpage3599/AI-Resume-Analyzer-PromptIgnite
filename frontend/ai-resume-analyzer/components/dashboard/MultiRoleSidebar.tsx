@@ -25,10 +25,10 @@ export default function MultiRoleSidebar({ comparison, candidateName }: Props) {
       <div className="border-b border-[rgba(13,71,161,0.08)] pb-4">
         <span className="label-eyebrow">Multi-Role Benchmark</span>
         <h2 className="mt-1 text-[18px] font-semibold tracking-[-0.01em] text-[#0d2740]">
-          Career Fit Leaderboard
+          Career Fit Leaderboard {comparison.field ? `— ${comparison.field}` : ""}
         </h2>
         <p className="mt-1 text-[12.5px] text-[#4f667a]">
-          Benchmarked across all {comparison.totalRolesCompared} industry job roles.
+          Benchmarked across {comparison.totalRolesCompared} specialized roles in {comparison.field || "this field"}.
         </p>
       </div>
 

@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ErrorNotice } from "@/components/ui/Notice";
 import { TargetIcon, FileTextIcon } from "@/components/core/Icons";
 import AnalyzingView from "./AnalyzingView";
-import RoleSelect from "./RoleSelect";
+import SearchableFieldSelect from "./SearchableFieldSelect";
+import SearchableRoleSelect from "./SearchableRoleSelect";
 import UploadPanel from "./UploadPanel";
 import { ApiError, analyzeResume } from "@/lib/api";
 import { saveResult } from "@/lib/resultStore";
@@ -28,10 +29,50 @@ export default function LandingView({
   const [file, setFile] = useState<File | null>(null);
   const [mode, setMode] = useState<"role" | "custom">("role");
   const [roleId, setRoleId] = useState<string>(defaultRoleId);
+  const [selectedField, setSelectedField] = useState<string>("Software Engineering");
   const [customJd, setCustomJd] = useState<string>("");
   const [fileError, setFileError] = useState<string | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+
+  // Compute unique fields from jobs list
+  const fields = useMemo(() => {
+    const set = new Set<string>();
+    jobs.forEach((j) => {
+      if (j.field) set.add(j.field);
+    });
+    return Array.from(set).sort();
+  }, [jobs]);
+
+  // Sync selectedField with current roleId
+  useEffect(() => {
+    if (jobs.length > 0) {
+      const activeJob = jobs.find((j) => j.id === roleId);
+      if (activeJob?.field) {
+        setSelectedField(activeJob.field);
+      } else if (fields.length > 0) {
+        setSelectedField(fields[0]);
+      }
+    }
+  }, [jobs, roleId, fields]);
+
+  // Filter roles by selected field
+  const filteredRoles = useMemo(() => {
+    if (!selectedField) return jobs;
+    return jobs.filter((j) => j.field === selectedField);
+  }, [jobs, selectedField]);
+
+  const getRoleCount = (field: string) => {
+    return jobs.filter((j) => j.field === field).length;
+  };
+
+  const handleFieldChange = (newField: string) => {
+    setSelectedField(newField);
+    const firstRoleInField = jobs.find((j) => j.field === newField);
+    if (firstRoleInField) {
+      setRoleId(firstRoleInField.id);
+    }
+  };
 
   const submit = async () => {
     if (!file || submitting) return;
@@ -161,13 +202,23 @@ export default function LandingView({
               </div>
 
               {mode === "role" ? (
-                <RoleSelect
-                  roles={jobs}
-                  value={roleId}
-                  onChange={setRoleId}
-                  loading={jobsLoading}
-                  disabled={jobsLoading || jobs.length === 0}
-                />
+                <div className="space-y-3.5">
+                  <SearchableFieldSelect
+                    fields={fields}
+                    selectedField={selectedField}
+                    onSelectField={handleFieldChange}
+                    getRoleCount={getRoleCount}
+                    disabled={jobsLoading || fields.length === 0}
+                  />
+                  <SearchableRoleSelect
+                    roles={filteredRoles}
+                    value={roleId}
+                    onChange={setRoleId}
+                    loading={jobsLoading}
+                    disabled={jobsLoading || filteredRoles.length === 0}
+                    fieldLabel={selectedField}
+                  />
+                </div>
               ) : (
                 <div>
                   <textarea

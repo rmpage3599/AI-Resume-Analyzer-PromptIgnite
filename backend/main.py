@@ -165,15 +165,12 @@ async def analyze_resume(
 @app.post("/api/compare-roles")
 async def compare_roles(
     resume: UploadFile = File(...),
-    roleIds: Optional[str] = Form(None)
+    roleIds: Optional[str] = Form(None),
+    field: Optional[str] = Form(None)
 ):
     """
     Compare a single resume across multiple job roles simultaneously.
     Returns a ranked leaderboard of all roles sorted by match score.
-    
-    Accepts:
-    - resume: PDF or DOCX file
-    - roleIds: optional comma-separated list of role IDs (default: compares all 12 roles)
     """
     filename, extracted_text = await _extract_text_from_upload(resume)
 
@@ -189,7 +186,8 @@ async def compare_roles(
     comparison_result = compare_multiple_roles(
         resume_skills=skills,
         resume_text=extracted_text,
-        role_ids=selected_role_ids
+        role_ids=selected_role_ids,
+        field=field
     )
 
     return {

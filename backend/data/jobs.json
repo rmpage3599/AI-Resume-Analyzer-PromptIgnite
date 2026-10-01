@@ -1,86 +1,2144 @@
 [
   {
-    "id": "aiml-engineer",
-    "title": "AI/ML Engineer",
-    "requiredSkills": ["Python", "Machine Learning", "NumPy", "Pandas", "Scikit-learn"],
-    "preferredSkills": ["TensorFlow", "PyTorch", "Deep Learning", "NLP", "Computer Vision", "Docker", "MLOps", "Transformers"],
-    "description": "Develop and deploy machine learning models, analyze complex datasets, and build intelligent algorithms for production applications."
-  },
-  {
-    "id": "data-scientist",
-    "title": "Data Scientist",
-    "requiredSkills": ["Python", "SQL", "Statistics", "Machine Learning", "Pandas", "Data Analysis"],
-    "preferredSkills": ["R", "Scikit-learn", "NumPy", "A/B Testing", "Data Visualization", "Matplotlib", "Seaborn", "BigQuery"],
-    "description": "Extract actionable business insights using statistical modeling, hypothesis testing, predictive analytics, and machine learning."
-  },
-  {
-    "id": "data-analyst",
-    "title": "Data Analyst / BI Specialist",
-    "requiredSkills": ["SQL", "Excel", "Python", "Power BI", "Data Visualization"],
-    "preferredSkills": ["Tableau", "Pandas", "NumPy", "Statistics", "ETL", "Data Warehousing", "Snowflake", "DAX"],
-    "description": "Transform raw business data into actionable insights, interactive dashboards, and strategic performance reports."
-  },
-  {
     "id": "frontend-developer",
     "title": "Frontend Developer (React / Next.js)",
-    "requiredSkills": ["JavaScript", "TypeScript", "React", "HTML", "CSS", "Tailwind CSS"],
-    "preferredSkills": ["Next.js", "Redux", "GraphQL", "REST APIs", "Responsive Design", "Jest", "Vite", "Webpack"],
-    "description": "Build high-performance, accessible, and responsive user interfaces for modern web applications using React and Next.js."
+    "field": "Software Engineering",
+    "requiredSkills": [
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "HTML",
+      "CSS",
+      "Tailwind CSS"
+    ],
+    "preferredSkills": [
+      "Next.js",
+      "Redux",
+      "GraphQL",
+      "REST APIs",
+      "Vite",
+      "Jest",
+      "Webpack"
+    ],
+    "description": "Build responsive, accessible, and high-performance web applications using modern React and Next.js."
   },
   {
     "id": "backend-python",
     "title": "Backend Developer (Python / FastAPI)",
-    "requiredSkills": ["Python", "FastAPI", "SQL", "PostgreSQL", "REST APIs"],
-    "preferredSkills": ["Django", "Flask", "Docker", "Redis", "Celery", "SQLAlchemy", "Microservices", "AWS"],
-    "description": "Architect scalable backend services, design robust APIs, optimize database queries, and ensure server security."
+    "field": "Software Engineering",
+    "requiredSkills": [
+      "Python",
+      "FastAPI",
+      "SQL",
+      "PostgreSQL",
+      "REST APIs"
+    ],
+    "preferredSkills": [
+      "Django",
+      "Flask",
+      "Docker",
+      "Redis",
+      "Celery",
+      "SQLAlchemy",
+      "Microservices",
+      "AWS"
+    ],
+    "description": "Architect scalable backend microservices, optimize database queries, and design robust APIs."
   },
   {
     "id": "backend-node",
     "title": "Backend Developer (Node.js / Express)",
-    "requiredSkills": ["JavaScript", "TypeScript", "Node.js", "Express", "REST APIs"],
-    "preferredSkills": ["NestJS", "PostgreSQL", "MongoDB", "Redis", "Docker", "Microservices", "GraphQL", "Jest"],
-    "description": "Develop high-throughput asynchronous backend systems, event-driven architectures, and microservices."
+    "field": "Software Engineering",
+    "requiredSkills": [
+      "JavaScript",
+      "TypeScript",
+      "Node.js",
+      "Express",
+      "REST APIs"
+    ],
+    "preferredSkills": [
+      "NestJS",
+      "PostgreSQL",
+      "MongoDB",
+      "Redis",
+      "Docker",
+      "Microservices",
+      "GraphQL",
+      "Jest"
+    ],
+    "description": "Develop event-driven asynchronous microservices and high-throughput backend APIs."
+  },
+  {
+    "id": "backend-java",
+    "title": "Backend Developer (Java / Spring Boot)",
+    "field": "Software Engineering",
+    "requiredSkills": [
+      "Java",
+      "Spring Boot",
+      "SQL",
+      "PostgreSQL",
+      "REST APIs"
+    ],
+    "preferredSkills": [
+      "Hibernate",
+      "Microservices",
+      "Kafka",
+      "Docker",
+      "Kubernetes",
+      "Maven",
+      "AWS",
+      "JUnit"
+    ],
+    "description": "Build enterprise-grade, distributed server-side applications using Spring Boot and Java."
+  },
+  {
+    "id": "backend-golang",
+    "title": "Backend Developer (Go / Golang)",
+    "field": "Software Engineering",
+    "requiredSkills": [
+      "Go",
+      "REST APIs",
+      "SQL",
+      "Docker",
+      "Microservices"
+    ],
+    "preferredSkills": [
+      "gRPC",
+      "PostgreSQL",
+      "Kubernetes",
+      "Redis",
+      "Kafka",
+      "Linux",
+      "Concurrency"
+    ],
+    "description": "Engineer high-concurrency, low-latency microservices and cloud-native systems with Go."
+  },
+  {
+    "id": "backend-csharp",
+    "title": ".NET Core / C# Developer",
+    "field": "Software Engineering",
+    "requiredSkills": [
+      "C#",
+      ".NET",
+      "SQL",
+      "REST APIs",
+      "SQL Server"
+    ],
+    "preferredSkills": [
+      "Entity Framework",
+      "Azure",
+      "Microservices",
+      "Docker",
+      "CI/CD",
+      "LINQ"
+    ],
+    "description": "Design robust enterprise software and cloud applications using modern C# and .NET Core."
   },
   {
     "id": "fullstack-developer",
-    "title": "Full Stack Developer",
-    "requiredSkills": ["JavaScript", "TypeScript", "React", "Node.js", "SQL", "Git"],
-    "preferredSkills": ["Next.js", "PostgreSQL", "MongoDB", "Docker", "AWS", "Tailwind CSS", "REST APIs", "CI/CD"],
-    "description": "Deliver end-to-end web applications bridging frontend user experience with reliable backend microservices and databases."
+    "title": "Full Stack Developer (MERN / TypeScript)",
+    "field": "Software Engineering",
+    "requiredSkills": [
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Node.js",
+      "SQL",
+      "Git"
+    ],
+    "preferredSkills": [
+      "Next.js",
+      "PostgreSQL",
+      "MongoDB",
+      "Docker",
+      "AWS",
+      "Tailwind CSS",
+      "CI/CD"
+    ],
+    "description": "Deliver complete end-to-end web applications combining intuitive UIs with scalable backend services."
+  },
+  {
+    "id": "mobile-ios",
+    "title": "iOS Developer (Swift / SwiftUI)",
+    "field": "Software Engineering",
+    "requiredSkills": [
+      "Swift",
+      "iOS",
+      "Xcode",
+      "Mobile Development",
+      "REST APIs"
+    ],
+    "preferredSkills": [
+      "SwiftUI",
+      "UIKit",
+      "Combine",
+      "CoreData",
+      "Git",
+      "App Store Deployment"
+    ],
+    "description": "Develop native iOS apps delivering smooth 60fps UI, offline storage, and polished user experience."
+  },
+  {
+    "id": "mobile-android",
+    "title": "Android Developer (Kotlin)",
+    "field": "Software Engineering",
+    "requiredSkills": [
+      "Kotlin",
+      "Android",
+      "Android Studio",
+      "Mobile Development",
+      "REST APIs"
+    ],
+    "preferredSkills": [
+      "Jetpack Compose",
+      "Coroutines",
+      "Room",
+      "Dagger Hilt",
+      "Git",
+      "Google Play Deployment"
+    ],
+    "description": "Build robust, responsive Android applications following modern Android architecture standards."
+  },
+  {
+    "id": "mobile-flutter",
+    "title": "Cross-Platform Mobile Developer (Flutter)",
+    "field": "Software Engineering",
+    "requiredSkills": [
+      "Flutter",
+      "Dart",
+      "Mobile Development",
+      "REST APIs",
+      "Git"
+    ],
+    "preferredSkills": [
+      "State Management",
+      "Bloc",
+      "Provider",
+      "Firebase",
+      "iOS",
+      "Android"
+    ],
+    "description": "Deliver multi-platform mobile apps for iOS and Android from a single shared Dart codebase."
+  },
+  {
+    "id": "systems-engineer",
+    "title": "Systems Software Engineer (C / C++)",
+    "field": "Software Engineering",
+    "requiredSkills": [
+      "C++",
+      "C",
+      "Linux",
+      "Data Structures",
+      "Algorithms"
+    ],
+    "preferredSkills": [
+      "Multithreading",
+      "Memory Management",
+      "Operating Systems",
+      "Networking",
+      "GDB",
+      "Git"
+    ],
+    "description": "Build high-performance system software, networking daemons, and operating system utilities."
+  },
+  {
+    "id": "embedded-engineer",
+    "title": "Embedded Systems & Firmware Engineer",
+    "field": "Software Engineering",
+    "requiredSkills": [
+      "C",
+      "C++",
+      "Microcontrollers",
+      "Embedded Systems",
+      "RTOS"
+    ],
+    "preferredSkills": [
+      "ARM",
+      "I2C",
+      "SPI",
+      "UART",
+      "PCB Design",
+      "Hardware Debugging",
+      "Git"
+    ],
+    "description": "Program low-level firmware for microcontrollers and IoT hardware devices with real-time constraints."
+  },
+  {
+    "id": "blockchain-developer",
+    "title": "Blockchain & Smart Contract Developer",
+    "field": "Software Engineering",
+    "requiredSkills": [
+      "Solidity",
+      "Ethereum",
+      "Smart Contracts",
+      "Web3",
+      "JavaScript"
+    ],
+    "preferredSkills": [
+      "Hardhat",
+      "Ethers.js",
+      "Rust",
+      "DeFi",
+      "Truffle",
+      "Security Auditing"
+    ],
+    "description": "Develop secure smart contracts and decentralized Web3 applications on EVM blockchains."
+  },
+  {
+    "id": "game-developer",
+    "title": "Game Developer (Unity / C#)",
+    "field": "Software Engineering",
+    "requiredSkills": [
+      "Unity",
+      "C#",
+      "Game Development",
+      "3D Math",
+      "Physics Engine"
+    ],
+    "preferredSkills": [
+      "Shader Programming",
+      "Unreal Engine",
+      "C++",
+      "Animation",
+      "Git",
+      "Optimization"
+    ],
+    "description": "Create interactive 2D and 3D gameplay mechanics, graphics rendering, and physics simulations."
+  },
+  {
+    "id": "ar-vr-engineer",
+    "title": "AR / VR Graphics Engineer",
+    "field": "Software Engineering",
+    "requiredSkills": [
+      "Unity",
+      "C#",
+      "Virtual Reality",
+      "Augmented Reality",
+      "3D Graphics"
+    ],
+    "preferredSkills": [
+      "Unreal Engine",
+      "OpenXR",
+      "Computer Graphics",
+      "Shaders",
+      "Blender"
+    ],
+    "description": "Build immersive augmented and virtual reality spatial experiences for modern head-mounted displays."
+  },
+  {
+    "id": "api-integration-engineer",
+    "title": "API & Solutions Engineer",
+    "field": "Software Engineering",
+    "requiredSkills": [
+      "REST APIs",
+      "Postman",
+      "Python",
+      "JavaScript",
+      "SQL"
+    ],
+    "preferredSkills": [
+      "GraphQL",
+      "Webhooks",
+      "OAuth",
+      "Docker",
+      "Swagger",
+      "Customer Facing"
+    ],
+    "description": "Design, integrate, and support complex B2B API integrations and third-party SaaS ecosystems."
+  },
+  {
+    "id": "aiml-engineer",
+    "title": "AI / ML Engineer",
+    "field": "Data & Artificial Intelligence",
+    "requiredSkills": [
+      "Python",
+      "Machine Learning",
+      "NumPy",
+      "Pandas",
+      "Scikit-learn"
+    ],
+    "preferredSkills": [
+      "TensorFlow",
+      "PyTorch",
+      "Deep Learning",
+      "NLP",
+      "Computer Vision",
+      "Docker",
+      "MLOps"
+    ],
+    "description": "Develop, train, and deploy machine learning models into production systems at scale."
+  },
+  {
+    "id": "data-scientist",
+    "title": "Data Scientist",
+    "field": "Data & Artificial Intelligence",
+    "requiredSkills": [
+      "Python",
+      "SQL",
+      "Statistics",
+      "Machine Learning",
+      "Pandas",
+      "Data Analysis"
+    ],
+    "preferredSkills": [
+      "R",
+      "Scikit-learn",
+      "NumPy",
+      "A/B Testing",
+      "Data Visualization",
+      "BigQuery"
+    ],
+    "description": "Extract actionable business insights using statistical modeling and predictive machine learning algorithms."
+  },
+  {
+    "id": "nlp-engineer",
+    "title": "Natural Language Processing (NLP) Engineer",
+    "field": "Data & Artificial Intelligence",
+    "requiredSkills": [
+      "Python",
+      "NLP",
+      "PyTorch",
+      "Transformers",
+      "Machine Learning"
+    ],
+    "preferredSkills": [
+      "Hugging Face",
+      "BERT",
+      "LLMs",
+      "Tokenization",
+      "Vector Databases",
+      "LangChain"
+    ],
+    "description": "Build semantic text processing, sentiment analysis, and generative language model applications."
+  },
+  {
+    "id": "computer-vision-engineer",
+    "title": "Computer Vision Engineer",
+    "field": "Data & Artificial Intelligence",
+    "requiredSkills": [
+      "Python",
+      "Computer Vision",
+      "OpenCV",
+      "PyTorch",
+      "Deep Learning"
+    ],
+    "preferredSkills": [
+      "TensorFlow",
+      "YOLO",
+      "Image Segmentation",
+      "Object Detection",
+      "CUDA",
+      "C++"
+    ],
+    "description": "Build image recognition, object detection, and video analysis pipelines for autonomous systems."
+  },
+  {
+    "id": "mlops-engineer",
+    "title": "MLOps & Model Deployment Engineer",
+    "field": "Data & Artificial Intelligence",
+    "requiredSkills": [
+      "Python",
+      "Docker",
+      "Kubernetes",
+      "MLOps",
+      "CI/CD",
+      "Machine Learning"
+    ],
+    "preferredSkills": [
+      "MLflow",
+      "Kubeflow",
+      "AWS SageMaker",
+      "Feature Stores",
+      "Terraform",
+      "Prometheus"
+    ],
+    "description": "Automate machine learning model training pipelines, versioning, monitoring, and live inference scaling."
+  },
+  {
+    "id": "llm-prompt-engineer",
+    "title": "LLM Application & Prompt Engineer",
+    "field": "Data & Artificial Intelligence",
+    "requiredSkills": [
+      "Python",
+      "Prompt Engineering",
+      "LangChain",
+      "OpenAI API",
+      "Vector Databases"
+    ],
+    "preferredSkills": [
+      "RAG",
+      "LlamaIndex",
+      "ChromaDB",
+      "Pinecone",
+      "Fine-Tuning",
+      "FastAPI"
+    ],
+    "description": "Build Retrieval-Augmented Generation (RAG) pipelines and autonomous agent workflows with modern LLMs."
+  },
+  {
+    "id": "data-analyst",
+    "title": "Data Analyst / BI Specialist",
+    "field": "Data & Artificial Intelligence",
+    "requiredSkills": [
+      "SQL",
+      "Excel",
+      "Python",
+      "Power BI",
+      "Data Visualization"
+    ],
+    "preferredSkills": [
+      "Tableau",
+      "Pandas",
+      "NumPy",
+      "Statistics",
+      "ETL",
+      "Data Warehousing",
+      "Snowflake"
+    ],
+    "description": "Transform complex business datasets into intuitive dashboards, KPI trackers, and analytical reports."
+  },
+  {
+    "id": "data-engineer",
+    "title": "Data Engineer",
+    "field": "Data & Artificial Intelligence",
+    "requiredSkills": [
+      "Python",
+      "SQL",
+      "ETL",
+      "Data Warehousing",
+      "Spark"
+    ],
+    "preferredSkills": [
+      "Airflow",
+      "Kafka",
+      "Snowflake",
+      "BigQuery",
+      "Docker",
+      "AWS",
+      "dbt"
+    ],
+    "description": "Architect robust data ingestion pipelines, warehouse architectures, and real-time streaming pipelines."
+  },
+  {
+    "id": "analytics-engineer",
+    "title": "Analytics Engineer (dbt / SQL)",
+    "field": "Data & Artificial Intelligence",
+    "requiredSkills": [
+      "SQL",
+      "dbt",
+      "Data Modeling",
+      "Data Warehousing",
+      "Git"
+    ],
+    "preferredSkills": [
+      "Snowflake",
+      "BigQuery",
+      "Looker",
+      "Python",
+      "Airflow",
+      "Data Governance"
+    ],
+    "description": "Bridge data engineering and business analysis by delivering tested, documented data transformation models."
+  },
+  {
+    "id": "bi-developer",
+    "title": "Business Intelligence (BI) Developer",
+    "field": "Data & Artificial Intelligence",
+    "requiredSkills": [
+      "Power BI",
+      "SQL",
+      "DAX",
+      "Data Modeling",
+      "Excel"
+    ],
+    "preferredSkills": [
+      "Tableau",
+      "SSIS",
+      "SSAS",
+      "Data Warehousing",
+      "ETL",
+      "Dashboard Design"
+    ],
+    "description": "Design semantic data models, enterprise reporting architectures, and interactive BI dashboards."
+  },
+  {
+    "id": "quantitative-analyst",
+    "title": "Quantitative Analyst (Quant / Algorithmic Trading)",
+    "field": "Data & Artificial Intelligence",
+    "requiredSkills": [
+      "Python",
+      "Statistics",
+      "Mathematics",
+      "Financial Modeling",
+      "SQL"
+    ],
+    "preferredSkills": [
+      "C++",
+      "Time Series Analysis",
+      "Stochastic Calculus",
+      "Pandas",
+      "NumPy",
+      "Risk Modeling"
+    ],
+    "description": "Develop mathematical models and algorithmic trading strategies for financial markets and hedge funds."
+  },
+  {
+    "id": "deep-learning-researcher",
+    "title": "Deep Learning Research Scientist",
+    "field": "Data & Artificial Intelligence",
+    "requiredSkills": [
+      "Python",
+      "Deep Learning",
+      "PyTorch",
+      "Linear Algebra",
+      "Research"
+    ],
+    "preferredSkills": [
+      "TensorFlow",
+      "CUDA",
+      "Optimization",
+      "Reinforcement Learning",
+      "Paper Publications"
+    ],
+    "description": "Advance state-of-the-art neural architectures through novel algorithm design and scientific experiments."
+  },
+  {
+    "id": "speech-audio-ai-engineer",
+    "title": "Speech & Audio AI Engineer",
+    "field": "Data & Artificial Intelligence",
+    "requiredSkills": [
+      "Python",
+      "Signal Processing",
+      "Deep Learning",
+      "PyTorch",
+      "Audio Processing"
+    ],
+    "preferredSkills": [
+      "Whisper",
+      "ASR",
+      "TTS",
+      "Hugging Face",
+      "Docker",
+      "C++"
+    ],
+    "description": "Engineer voice recognition, automated speech-to-text, and audio synthesis deep learning models."
+  },
+  {
+    "id": "database-architect",
+    "title": "Database Architect & Administrator",
+    "field": "Data & Artificial Intelligence",
+    "requiredSkills": [
+      "SQL",
+      "PostgreSQL",
+      "MySQL",
+      "Database Design",
+      "Performance Tuning"
+    ],
+    "preferredSkills": [
+      "MongoDB",
+      "Redis",
+      "Backup Recovery",
+      "Replication",
+      "High Availability",
+      "Linux"
+    ],
+    "description": "Architect enterprise database schemas, ensure high availability replication, and tune query performance."
+  },
+  {
+    "id": "ai-ethics-governance",
+    "title": "AI Ethics & Governance Specialist",
+    "field": "Data & Artificial Intelligence",
+    "requiredSkills": [
+      "Data Privacy",
+      "AI Governance",
+      "Risk Assessment",
+      "Machine Learning Concepts",
+      "Compliance"
+    ],
+    "preferredSkills": [
+      "GDPR",
+      "Bias Detection",
+      "Responsible AI",
+      "Model Explainability",
+      "Policy Writing"
+    ],
+    "description": "Ensure AI models comply with global regulatory frameworks, bias mitigation, and ethical standards."
   },
   {
     "id": "devops-engineer",
-    "title": "DevOps & Cloud Engineer",
-    "requiredSkills": ["Linux", "Docker", "Kubernetes", "AWS", "CI/CD", "Git"],
-    "preferredSkills": ["Terraform", "Ansible", "Jenkins", "GitHub Actions", "Azure", "GCP", "Prometheus", "Grafana", "Bash"],
-    "description": "Automate deployment pipelines, manage scalable cloud infrastructure, and ensure high system reliability and security."
+    "title": "DevOps Engineer",
+    "field": "Cloud & DevOps Infrastructure",
+    "requiredSkills": [
+      "Linux",
+      "Docker",
+      "Kubernetes",
+      "AWS",
+      "CI/CD",
+      "Git"
+    ],
+    "preferredSkills": [
+      "Terraform",
+      "Ansible",
+      "Jenkins",
+      "GitHub Actions",
+      "Prometheus",
+      "Grafana",
+      "Bash"
+    ],
+    "description": "Automate deployment pipelines, orchestrate containers, and maintain cloud infrastructure."
   },
   {
-    "id": "mobile-developer",
-    "title": "Mobile App Developer",
-    "requiredSkills": ["JavaScript", "TypeScript", "React Native", "Mobile Development", "REST APIs"],
-    "preferredSkills": ["Flutter", "Dart", "Swift", "Kotlin", "iOS", "Android", "Redux", "Firebase", "App Store Deployment"],
-    "description": "Build and publish cross-platform mobile applications with smooth native performance, offline storage, and clean UI."
+    "id": "cloud-architect-aws",
+    "title": "Cloud Solutions Architect (AWS)",
+    "field": "Cloud & DevOps Infrastructure",
+    "requiredSkills": [
+      "AWS",
+      "Cloud Architecture",
+      "Networking",
+      "Security",
+      "Terraform"
+    ],
+    "preferredSkills": [
+      "Kubernetes",
+      "Serverless",
+      "Lambda",
+      "Docker",
+      "Cost Optimization",
+      "IAM"
+    ],
+    "description": "Architect fault-tolerant, secure, and cost-optimized multi-region enterprise environments on AWS."
+  },
+  {
+    "id": "cloud-architect-azure",
+    "title": "Cloud Solutions Architect (Azure)",
+    "field": "Cloud & DevOps Infrastructure",
+    "requiredSkills": [
+      "Azure",
+      "Cloud Architecture",
+      "Networking",
+      "Active Directory",
+      "Terraform"
+    ],
+    "preferredSkills": [
+      "AKS",
+      "Azure DevOps",
+      "ARM Templates",
+      "PowerShell",
+      "Docker",
+      "Security"
+    ],
+    "description": "Design hybrid cloud infrastructure, enterprise identity management, and governance on Microsoft Azure."
+  },
+  {
+    "id": "cloud-engineer-gcp",
+    "title": "GCP Cloud Engineer",
+    "field": "Cloud & DevOps Infrastructure",
+    "requiredSkills": [
+      "Google Cloud Platform (GCP)",
+      "Kubernetes",
+      "Docker",
+      "Linux",
+      "Terraform"
+    ],
+    "preferredSkills": [
+      "GKE",
+      "BigQuery",
+      "Cloud Functions",
+      "Python",
+      "CI/CD",
+      "Networking"
+    ],
+    "description": "Build and operate containerized applications and distributed services on Google Cloud Platform."
+  },
+  {
+    "id": "site-reliability-engineer",
+    "title": "Site Reliability Engineer (SRE)",
+    "field": "Cloud & DevOps Infrastructure",
+    "requiredSkills": [
+      "Linux",
+      "Python",
+      "Kubernetes",
+      "Monitoring",
+      "Incident Management"
+    ],
+    "preferredSkills": [
+      "Prometheus",
+      "Grafana",
+      "SLO/SLA",
+      "Distributed Systems",
+      "Terraform",
+      "Go"
+    ],
+    "description": "Maintain 99.99% system uptime, manage incident response, and automate operational toil."
+  },
+  {
+    "id": "platform-engineer",
+    "title": "Platform Engineer (Kubernetes / Internal Tools)",
+    "field": "Cloud & DevOps Infrastructure",
+    "requiredSkills": [
+      "Kubernetes",
+      "Docker",
+      "Go",
+      "Linux",
+      "CI/CD",
+      "Helm"
+    ],
+    "preferredSkills": [
+      "Terraform",
+      "ArgoCD",
+      "Service Mesh",
+      "Istio",
+      "Observability",
+      "Developer Tooling"
+    ],
+    "description": "Build developer self-service platforms, automated internal tooling, and standardized container runtimes."
+  },
+  {
+    "id": "cloud-security-engineer",
+    "title": "Cloud Security & Compliance Engineer",
+    "field": "Cloud & DevOps Infrastructure",
+    "requiredSkills": [
+      "AWS",
+      "Cloud Security",
+      "IAM",
+      "Network Security",
+      "Compliance"
+    ],
+    "preferredSkills": [
+      "Terraform",
+      "SOC 2",
+      "CIS Benchmarks",
+      "Kubernetes Security",
+      "Python",
+      "SIEM"
+    ],
+    "description": "Enforce cloud security guardrails, automate vulnerability scans, and implement zero-trust IAM policies."
+  },
+  {
+    "id": "network-engineer",
+    "title": "Network & Infrastructure Engineer",
+    "field": "Cloud & DevOps Infrastructure",
+    "requiredSkills": [
+      "Networking",
+      "TCP/IP",
+      "Routing & Switching",
+      "Firewalls",
+      "VPN"
+    ],
+    "preferredSkills": [
+      "Cisco",
+      "BGP",
+      "DNS",
+      "Network Automation",
+      "Python",
+      "Wireshark"
+    ],
+    "description": "Configure, secure, and monitor global corporate and cloud network topologies."
+  },
+  {
+    "id": "systems-administrator-linux",
+    "title": "Senior Linux Systems Administrator",
+    "field": "Cloud & DevOps Infrastructure",
+    "requiredSkills": [
+      "Linux",
+      "Bash",
+      "System Administration",
+      "Shell Scripting",
+      "Networking"
+    ],
+    "preferredSkills": [
+      "Ansible",
+      "Storage Management",
+      "Backup Recovery",
+      "Security Hardening",
+      "Python"
+    ],
+    "description": "Maintain bare-metal and virtual Linux servers, monitor capacity, and automate routine admin tasks."
+  },
+  {
+    "id": "finops-cloud-cost-analyst",
+    "title": "FinOps & Cloud Cost Optimization Specialist",
+    "field": "Cloud & DevOps Infrastructure",
+    "requiredSkills": [
+      "AWS",
+      "Cloud Cost Management",
+      "FinOps",
+      "Data Analysis",
+      "Excel"
+    ],
+    "preferredSkills": [
+      "Azure",
+      "Kubecost",
+      "SQL",
+      "Cost Allocation",
+      "Reserved Instances",
+      "Python"
+    ],
+    "description": "Analyze cloud infrastructure expenditure, identify waste, and implement cost-saving policies."
+  },
+  {
+    "id": "ci-cd-release-engineer",
+    "title": "Build & Release Automation Engineer",
+    "field": "Cloud & DevOps Infrastructure",
+    "requiredSkills": [
+      "CI/CD",
+      "GitHub Actions",
+      "Docker",
+      "Git",
+      "Linux"
+    ],
+    "preferredSkills": [
+      "Jenkins",
+      "GitLab CI",
+      "Artifact Management",
+      "Bash",
+      "Python",
+      "Testing Pipelines"
+    ],
+    "description": "Accelerate software delivery velocity through automated continuous integration and artifact testing."
+  },
+  {
+    "id": "it-infrastructure-manager",
+    "title": "IT Infrastructure & Operations Lead",
+    "field": "Cloud & DevOps Infrastructure",
+    "requiredSkills": [
+      "IT Operations",
+      "Infrastructure Management",
+      "Active Directory",
+      "Disaster Recovery",
+      "Security"
+    ],
+    "preferredSkills": [
+      "Cloud Migration",
+      "Vendor Management",
+      "ITIL",
+      "Helpdesk Leadership",
+      "Budgeting"
+    ],
+    "description": "Lead enterprise IT systems, disaster recovery planning, and IT service desk operations."
   },
   {
     "id": "cybersecurity-analyst",
     "title": "Cybersecurity Analyst",
-    "requiredSkills": ["Network Security", "Linux", "Python", "Vulnerability Assessment", "Information Security"],
-    "preferredSkills": ["SIEM", "Penetration Testing", "Wireshark", "OWASP", "Firewalls", "Incident Response", "Cryptography"],
-    "description": "Monitor and defend networks, identify system vulnerabilities, conduct penetration tests, and enforce security policies."
+    "field": "Cybersecurity & Infosec",
+    "requiredSkills": [
+      "Network Security",
+      "Linux",
+      "Python",
+      "Vulnerability Assessment",
+      "Information Security"
+    ],
+    "preferredSkills": [
+      "SIEM",
+      "Penetration Testing",
+      "Wireshark",
+      "OWASP",
+      "Firewalls",
+      "Incident Response"
+    ],
+    "description": "Detect network intrusions, analyze threat indicators, and remediate system security flaws."
   },
   {
-    "id": "qa-automation-engineer",
-    "title": "QA & Automation Engineer",
-    "requiredSkills": ["Python", "Selenium", "Test Automation", "QA", "Manual Testing"],
-    "preferredSkills": ["Playwright", "Cypress", "PyTest", "API Testing", "Postman", "Jenkins", "Jira", "CI/CD"],
-    "description": "Design automated test suites, execute end-to-end integration tests, and ensure bug-free software releases."
+    "id": "soc-analyst",
+    "title": "Security Operations Center (SOC) Analyst",
+    "field": "Cybersecurity & Infosec",
+    "requiredSkills": [
+      "SIEM",
+      "Log Analysis",
+      "Incident Handling",
+      "Threat Detection",
+      "Network Security"
+    ],
+    "preferredSkills": [
+      "Splunk",
+      "CrowdStrike",
+      "EDR",
+      "Wireshark",
+      "MITRE ATT&CK",
+      "Phishing Analysis"
+    ],
+    "description": "Monitor real-time security alerts, investigate anomalous activity, and coordinate incident response."
+  },
+  {
+    "id": "penetration-tester",
+    "title": "Penetration Tester / Ethical Hacker",
+    "field": "Cybersecurity & Infosec",
+    "requiredSkills": [
+      "Penetration Testing",
+      "Ethical Hacking",
+      "OWASP",
+      "Linux",
+      "Burp Suite"
+    ],
+    "preferredSkills": [
+      "Metasploit",
+      "Python",
+      "Network Exploitation",
+      "Web Application Security",
+      "Kali Linux"
+    ],
+    "description": "Simulate adversary cyber attacks to uncover and document vulnerabilities in networks and web apps."
+  },
+  {
+    "id": "appsec-engineer",
+    "title": "Application Security (AppSec) Engineer",
+    "field": "Cybersecurity & Infosec",
+    "requiredSkills": [
+      "OWASP",
+      "SAST",
+      "DAST",
+      "Secure Coding",
+      "Vulnerability Management"
+    ],
+    "preferredSkills": [
+      "Python",
+      "JavaScript",
+      "Threat Modeling",
+      "Code Auditing",
+      "CI/CD Security",
+      "Snyk"
+    ],
+    "description": "Integrate security gates into software delivery lifecycles, conduct code reviews, and patch zero-days."
+  },
+  {
+    "id": "incident-response-specialist",
+    "title": "Incident Response & Digital Forensics Specialist",
+    "field": "Cybersecurity & Infosec",
+    "requiredSkills": [
+      "Incident Response",
+      "Digital Forensics",
+      "Memory Forensics",
+      "Malware Analysis",
+      "Linux"
+    ],
+    "preferredSkills": [
+      "EnCase",
+      "FTK",
+      "Volatility",
+      "Chain of Custody",
+      "Threat Hunting",
+      "Reverse Engineering"
+    ],
+    "description": "Investigate data breaches, conduct disk and memory forensics, and contain cyber attacks."
+  },
+  {
+    "id": "iam-engineer",
+    "title": "Identity & Access Management (IAM) Engineer",
+    "field": "Cybersecurity & Infosec",
+    "requiredSkills": [
+      "IAM",
+      "SSO",
+      "SAML",
+      "OAuth",
+      "Active Directory"
+    ],
+    "preferredSkills": [
+      "Okta",
+      "Azure AD",
+      "Zero Trust",
+      "Privileged Access Management (PAM)",
+      "Role-Based Access"
+    ],
+    "description": "Architect identity lifecycle systems, single sign-on authentication, and least-privilege security controls."
+  },
+  {
+    "id": "grc-security-specialist",
+    "title": "Governance, Risk & Compliance (GRC) Analyst",
+    "field": "Cybersecurity & Infosec",
+    "requiredSkills": [
+      "Risk Assessment",
+      "Compliance",
+      "Information Security Policies",
+      "SOC 2",
+      "ISO 27001"
+    ],
+    "preferredSkills": [
+      "NIST",
+      "HIPAA",
+      "Audit Management",
+      "Vendor Risk",
+      "Data Privacy",
+      "GDPR"
+    ],
+    "description": "Ensure organizational compliance with global privacy regulations, security standards, and annual audits."
+  },
+  {
+    "id": "cryptography-engineer",
+    "title": "Cryptography & Security Protocols Engineer",
+    "field": "Cybersecurity & Infosec",
+    "requiredSkills": [
+      "Cryptography",
+      "C++",
+      "Python",
+      "Public Key Infrastructure (PKI)",
+      "Security Protocols"
+    ],
+    "preferredSkills": [
+      "Post-Quantum Cryptography",
+      "Zero Knowledge Proofs",
+      "OpenSSL",
+      "TLS/SSL",
+      "Algorithms"
+    ],
+    "description": "Implement cryptographic primitives, hardware security modules, and end-to-end encryption protocols."
+  },
+  {
+    "id": "ciso-security-lead",
+    "title": "Chief Information Security Officer (CISO / Security Director)",
+    "field": "Cybersecurity & Infosec",
+    "requiredSkills": [
+      "Security Strategy",
+      "Risk Management",
+      "Executive Leadership",
+      "Compliance",
+      "Budgeting"
+    ],
+    "preferredSkills": [
+      "Incident Escalation",
+      "Board Reporting",
+      "Vendor Evaluation",
+      "Security Architecture"
+    ],
+    "description": "Define enterprise cybersecurity strategy, manage security budgets, and report to board executives."
+  },
+  {
+    "id": "threat-intelligence-analyst",
+    "title": "Cyber Threat Intelligence (CTI) Analyst",
+    "field": "Cybersecurity & Infosec",
+    "requiredSkills": [
+      "Threat Intelligence",
+      "OSINT",
+      "MITRE ATT&CK",
+      "Indicators of Compromise",
+      "Reporting"
+    ],
+    "preferredSkills": [
+      "Dark Web Monitoring",
+      "Python",
+      "MISP",
+      "Threat Actor Tracking",
+      "YARA Rules"
+    ],
+    "description": "Track advanced persistent threat (APT) groups, analyze malicious campaigns, and produce intelligence briefs."
   },
   {
     "id": "technical-product-manager",
-    "title": "Technical Product Manager",
-    "requiredSkills": ["Product Management", "Agile", "Scrum", "Data Analysis", "Roadmapping"],
-    "preferredSkills": ["SQL", "Jira", "A/B Testing", "System Design", "User Research", "Wireframing", "REST APIs"],
-    "description": "Bridge engineering, design, and business strategy to define product vision, prioritize sprint backlogs, and launch features."
+    "title": "Technical Product Manager (TPM)",
+    "field": "Product & Project Management",
+    "requiredSkills": [
+      "Product Management",
+      "Agile",
+      "Scrum",
+      "Data Analysis",
+      "Roadmapping"
+    ],
+    "preferredSkills": [
+      "SQL",
+      "Jira",
+      "A/B Testing",
+      "System Design",
+      "User Research",
+      "Wireframing",
+      "REST APIs"
+    ],
+    "description": "Bridge engineering, UX design, and executive business strategy to prioritize and deliver technical products."
+  },
+  {
+    "id": "product-manager",
+    "title": "Product Manager (B2B SaaS / Growth)",
+    "field": "Product & Project Management",
+    "requiredSkills": [
+      "Product Roadmap",
+      "Agile",
+      "User Stories",
+      "Market Research",
+      "KPI Tracking"
+    ],
+    "preferredSkills": [
+      "Figma",
+      "Mixpanel",
+      "Amplitude",
+      "Product Discovery",
+      "Go-to-Market",
+      "Customer Interviews"
+    ],
+    "description": "Drive user growth, product feature adoption, customer discovery, and sprint backlog prioritization."
+  },
+  {
+    "id": "scrum-master",
+    "title": "Agile Coach & Scrum Master",
+    "field": "Product & Project Management",
+    "requiredSkills": [
+      "Scrum",
+      "Agile Methodologies",
+      "Jira",
+      "Sprint Planning",
+      "Facilitation"
+    ],
+    "preferredSkills": [
+      "Kanban",
+      "SAFe",
+      "Continuous Improvement",
+      "Retrospectives",
+      "Conflict Resolution"
+    ],
+    "description": "Facilitate agile team ceremonies, eliminate blockers, and foster continuous sprint improvements."
+  },
+  {
+    "id": "project-manager-it",
+    "title": "IT Project Manager",
+    "field": "Product & Project Management",
+    "requiredSkills": [
+      "Project Management",
+      "Scheduling",
+      "Budget Management",
+      "Risk Management",
+      "Stakeholder Communication"
+    ],
+    "preferredSkills": [
+      "PMP Certification",
+      "MS Project",
+      "Jira",
+      "Scope Management",
+      "Vendor Management"
+    ],
+    "description": "Deliver complex IT software and hardware deployment projects on time and within allocated budget."
+  },
+  {
+    "id": "program-manager-tech",
+    "title": "Technical Program Manager (TPM)",
+    "field": "Product & Project Management",
+    "requiredSkills": [
+      "Program Management",
+      "Cross-Functional Leadership",
+      "Risk Mitigation",
+      "Strategic Planning",
+      "Agile"
+    ],
+    "preferredSkills": [
+      "Dependency Mapping",
+      "Executive Reporting",
+      "Resource Allocation",
+      "System Architecture"
+    ],
+    "description": "Align multiple cross-functional engineering teams to deliver massive strategic enterprise programs."
+  },
+  {
+    "id": "business-analyst",
+    "title": "IT Business Systems Analyst",
+    "field": "Product & Project Management",
+    "requiredSkills": [
+      "Requirements Gathering",
+      "Process Mapping",
+      "SQL",
+      "User Stories",
+      "UML / Flowcharts"
+    ],
+    "preferredSkills": [
+      "Gap Analysis",
+      "Jira",
+      "Excel",
+      "Stakeholder Interviews",
+      "ERP Systems"
+    ],
+    "description": "Translate complex business stakeholder workflows into detailed technical requirements and specifications."
+  },
+  {
+    "id": "product-owner",
+    "title": "Agile Product Owner",
+    "field": "Product & Project Management",
+    "requiredSkills": [
+      "Backlog Management",
+      "User Stories",
+      "Scrum",
+      "Acceptance Criteria",
+      "Prioritization"
+    ],
+    "preferredSkills": [
+      "Jira",
+      "Stakeholder Management",
+      "Sprint Review",
+      "Market Feedback",
+      "Wireframes"
+    ],
+    "description": "Own the team sprint backlog, define granular acceptance criteria, and ensure high feature value."
+  },
+  {
+    "id": "engineering-manager",
+    "title": "Engineering Manager (Software / Tech)",
+    "field": "Product & Project Management",
+    "requiredSkills": [
+      "Engineering Leadership",
+      "People Management",
+      "1-on-1s",
+      "System Architecture",
+      "Agile"
+    ],
+    "preferredSkills": [
+      "Hiring & Recruiting",
+      "Performance Reviews",
+      "Tech Debt Management",
+      "Resource Planning"
+    ],
+    "description": "Lead, mentor, and scale high-performing software engineering teams while ensuring timely delivery."
+  },
+  {
+    "id": "operations-strategy-manager",
+    "title": "Strategy & Business Operations Manager",
+    "field": "Product & Project Management",
+    "requiredSkills": [
+      "Financial Modeling",
+      "Data Analysis",
+      "Strategy",
+      "Executive Presentation",
+      "KPI Monitoring"
+    ],
+    "preferredSkills": [
+      "SQL",
+      "Tableau",
+      "Market Sizing",
+      "Consulting Background",
+      "Process Optimization"
+    ],
+    "description": "Formulate strategic business growth initiatives, optimize internal operational bottlenecks, and analyze KPIs."
+  },
+  {
+    "id": "customer-success-ops-lead",
+    "title": "Customer Success Operations Manager",
+    "field": "Product & Project Management",
+    "requiredSkills": [
+      "Customer Success",
+      "Churn Reduction",
+      "Gainsight",
+      "Process Optimization",
+      "Analytics"
+    ],
+    "preferredSkills": [
+      "Salesforce",
+      "Onboarding Automation",
+      "Health Scoring",
+      "NPS Tracking",
+      "Excel"
+    ],
+    "description": "Build onboarding workflows, monitor customer health metrics, and increase net revenue retention."
+  },
+  {
+    "id": "ui-ux-designer",
+    "title": "UI / UX Product Designer",
+    "field": "UI/UX & Product Design",
+    "requiredSkills": [
+      "Figma",
+      "UI Design",
+      "UX Design",
+      "Wireframing",
+      "Prototyping"
+    ],
+    "preferredSkills": [
+      "User Research",
+      "Design Systems",
+      "Usability Testing",
+      "Interaction Design",
+      "Adobe XD"
+    ],
+    "description": "Craft visually stunning, human-centered user interfaces and interaction flows for web and mobile products."
+  },
+  {
+    "id": "ux-researcher",
+    "title": "User Experience (UX) Researcher",
+    "field": "UI/UX & Product Design",
+    "requiredSkills": [
+      "User Research",
+      "Usability Testing",
+      "User Interviews",
+      "Qualitative Analysis",
+      "Persona Creation"
+    ],
+    "preferredSkills": [
+      "Survey Design",
+      "Quantitative Research",
+      "Card Sorting",
+      "Journey Mapping",
+      "Figma"
+    ],
+    "description": "Conduct generative and evaluative user studies, synthesize insights, and guide product design decisions."
+  },
+  {
+    "id": "design-system-lead",
+    "title": "Design System Architect",
+    "field": "UI/UX & Product Design",
+    "requiredSkills": [
+      "Design Systems",
+      "Figma Components",
+      "Tokens",
+      "Accessibility (a11y)",
+      "UI Guidelines"
+    ],
+    "preferredSkills": [
+      "CSS",
+      "HTML",
+      "Storybook",
+      "Component Documentation",
+      "Cross-Functional Collaboration"
+    ],
+    "description": "Establish, scale, and govern reusable component libraries, color palettes, and typography tokens."
+  },
+  {
+    "id": "visual-graphic-designer",
+    "title": "Brand & Visual Designer",
+    "field": "UI/UX & Product Design",
+    "requiredSkills": [
+      "Adobe Illustrator",
+      "Photoshop",
+      "Typography",
+      "Branding",
+      "Visual Design"
+    ],
+    "preferredSkills": [
+      "Figma",
+      "InDesign",
+      "Color Theory",
+      "Iconography",
+      "Marketing Collateral"
+    ],
+    "description": "Create iconic visual branding identities, illustrations, typography hierarchies, and promotional assets."
+  },
+  {
+    "id": "motion-designer",
+    "title": "Motion Graphics & UI Interaction Designer",
+    "field": "UI/UX & Product Design",
+    "requiredSkills": [
+      "After Effects",
+      "Motion Design",
+      "Animation",
+      "Figma",
+      "Prototyping"
+    ],
+    "preferredSkills": [
+      "Lottie",
+      "3D Animation",
+      "Premiere Pro",
+      "Micro-Interactions",
+      "Video Editing"
+    ],
+    "description": "Design delightful micro-animations, product walkthrough videos, and responsive UI transitions."
+  },
+  {
+    "id": "information-architect",
+    "title": "Information Architect & Content Strategist",
+    "field": "UI/UX & Product Design",
+    "requiredSkills": [
+      "Information Architecture",
+      "Sitemaps",
+      "Taxonomy",
+      "Content Strategy",
+      "Wireframes"
+    ],
+    "preferredSkills": [
+      "Card Sorting",
+      "SEO",
+      "User Navigation",
+      "UX Writing",
+      "Figma"
+    ],
+    "description": "Structure complex data ecosystems, design intuitive navigation hierarchies, and categorize content."
+  },
+  {
+    "id": "ux-writer-content-designer",
+    "title": "UX Writer / Content Designer",
+    "field": "UI/UX & Product Design",
+    "requiredSkills": [
+      "UX Writing",
+      "Microcopy",
+      "Content Design",
+      "User-Centered Communication",
+      "Copywriting"
+    ],
+    "preferredSkills": [
+      "A/B Copy Testing",
+      "Style Guides",
+      "Figma",
+      "Localization",
+      "Voice & Tone Guidelines"
+    ],
+    "description": "Write crystal-clear in-app microcopy, error states, and onboarding guidance that simplify user journeys."
+  },
+  {
+    "id": "accessibility-designer",
+    "title": "Digital Accessibility (a11y) Specialist",
+    "field": "UI/UX & Product Design",
+    "requiredSkills": [
+      "WCAG Guidelines",
+      "Accessibility Testing",
+      "Screen Readers",
+      "Accessible UI",
+      "Color Contrast"
+    ],
+    "preferredSkills": [
+      "HTML/ARIA",
+      "Assistive Technology",
+      "Audit Reporting",
+      "Figma Plugins"
+    ],
+    "description": "Audit digital web applications to ensure full compliance with ADA and WCAG 2.1 AA/AAA accessibility standards."
+  },
+  {
+    "id": "qa-automation-engineer",
+    "title": "QA Automation Engineer",
+    "field": "Quality Assurance & SDET",
+    "requiredSkills": [
+      "Python",
+      "Selenium",
+      "Test Automation",
+      "QA",
+      "Manual Testing"
+    ],
+    "preferredSkills": [
+      "Playwright",
+      "Cypress",
+      "PyTest",
+      "API Testing",
+      "Postman",
+      "Jenkins",
+      "CI/CD"
+    ],
+    "description": "Design, code, and execute scalable automated regression test suites across browsers."
+  },
+  {
+    "id": "sdet",
+    "title": "Software Development Engineer in Test (SDET)",
+    "field": "Quality Assurance & SDET",
+    "requiredSkills": [
+      "Java",
+      "Selenium",
+      "Test Automation",
+      "Data Structures",
+      "Git"
+    ],
+    "preferredSkills": [
+      "TestNG",
+      "RestAssured",
+      "Docker",
+      "Kubernetes",
+      "CI/CD Pipelines",
+      "Performance Testing"
+    ],
+    "description": "Build test automation frameworks, write backend API mock tests, and maintain CI/CD test gates."
+  },
+  {
+    "id": "manual-qa-tester",
+    "title": "Senior QA Analyst (Manual / Exploratory)",
+    "field": "Quality Assurance & SDET",
+    "requiredSkills": [
+      "Manual Testing",
+      "Test Case Design",
+      "Bug Reporting",
+      "Jira",
+      "Regression Testing"
+    ],
+    "preferredSkills": [
+      "Postman",
+      "SQL",
+      "Mobile App Testing",
+      "User Acceptance Testing (UAT)",
+      "Smoke Testing"
+    ],
+    "description": "Perform meticulous exploratory, boundary, and user-acceptance testing across complex software."
+  },
+  {
+    "id": "performance-test-engineer",
+    "title": "Performance & Load Test Engineer",
+    "field": "Quality Assurance & SDET",
+    "requiredSkills": [
+      "JMeter",
+      "Load Testing",
+      "Performance Profiling",
+      "Stress Testing",
+      "API Testing"
+    ],
+    "preferredSkills": [
+      "Gatling",
+      "k6",
+      "Grafana",
+      "Database Bottlenecks",
+      "Linux",
+      "Network Latency Analysis"
+    ],
+    "description": "Simulate high concurrency loads, uncover memory leaks, and benchmark server response latency."
+  },
+  {
+    "id": "mobile-qa-engineer",
+    "title": "Mobile QA Engineer (iOS / Android)",
+    "field": "Quality Assurance & SDET",
+    "requiredSkills": [
+      "Mobile App Testing",
+      "Appium",
+      "iOS Testing",
+      "Android Testing",
+      "Bug Tracking"
+    ],
+    "preferredSkills": [
+      "Charles Proxy",
+      "Xcode Simulators",
+      "Android ADB",
+      "TestFlight",
+      "Automated Testing"
+    ],
+    "description": "Validate mobile application behavior across diverse screen sizes, network throttling, and OS versions."
+  },
+  {
+    "id": "api-qa-engineer",
+    "title": "API & Integration QA Engineer",
+    "field": "Quality Assurance & SDET",
+    "requiredSkills": [
+      "Postman",
+      "REST APIs",
+      "JSON / XML",
+      "API Automation",
+      "Test Strategy"
+    ],
+    "preferredSkills": [
+      "RestAssured",
+      "Python",
+      "Swagger / OpenAPI",
+      "Newman",
+      "SQL",
+      "Mock Servers"
+    ],
+    "description": "Conduct end-to-end API payload validation, contract testing, and automated microservice test executions."
+  },
+  {
+    "id": "security-qa-tester",
+    "title": "Security QA & Compliance Tester",
+    "field": "Quality Assurance & SDET",
+    "requiredSkills": [
+      "Vulnerability Scanning",
+      "OWASP Top 10",
+      "Security Testing",
+      "Test Case Design",
+      "QA"
+    ],
+    "preferredSkills": [
+      "Burp Suite",
+      "ZAP Proxy",
+      "Authentication Testing",
+      "Data Sanitization",
+      "Reporting"
+    ],
+    "description": "Integrate security test suites into release candidate testing to detect injection and authorization bugs."
+  },
+  {
+    "id": "qa-manager",
+    "title": "Quality Assurance & Test Operations Manager",
+    "field": "Quality Assurance & SDET",
+    "requiredSkills": [
+      "QA Strategy",
+      "Test Management",
+      "Team Leadership",
+      "Release Management",
+      "Metrics"
+    ],
+    "preferredSkills": [
+      "Jira Dashboards",
+      "Defect Triage",
+      "Automation ROI",
+      "Vendor Management",
+      "Agile"
+    ],
+    "description": "Lead the QA organization, establish test governance standards, and coordinate release sign-offs."
+  },
+  {
+    "id": "digital-marketing-specialist",
+    "title": "Digital Marketing Specialist",
+    "field": "Marketing & Growth",
+    "requiredSkills": [
+      "Digital Marketing",
+      "Google Ads",
+      "SEO",
+      "Content Strategy",
+      "Social Media Marketing"
+    ],
+    "preferredSkills": [
+      "Google Analytics",
+      "Email Marketing",
+      "Copywriting",
+      "A/B Testing",
+      "Facebook Ads"
+    ],
+    "description": "Plan, execute, and optimize multi-channel inbound marketing campaigns to drive user acquisition."
+  },
+  {
+    "id": "seo-specialist",
+    "title": "Search Engine Optimization (SEO) Lead",
+    "field": "Marketing & Growth",
+    "requiredSkills": [
+      "SEO",
+      "Keyword Research",
+      "Technical SEO",
+      "Google Search Console",
+      "On-Page SEO"
+    ],
+    "preferredSkills": [
+      "Ahrefs",
+      "Semrush",
+      "Backlink Building",
+      "Core Web Vitals",
+      "Content Optimization"
+    ],
+    "description": "Grow organic search traffic through technical site audits, keyword modeling, and backlink strategies."
+  },
+  {
+    "id": "performance-marketer",
+    "title": "Growth Hacker & Performance Marketer",
+    "field": "Marketing & Growth",
+    "requiredSkills": [
+      "PPC",
+      "Conversion Rate Optimization (CRO)",
+      "Google Ads",
+      "Meta Ads",
+      "Funnel Analytics"
+    ],
+    "preferredSkills": [
+      "A/B Testing",
+      "Customer Acquisition Cost (CAC)",
+      "LTV Modeling",
+      "SQL",
+      "Landing Page Optimization"
+    ],
+    "description": "Scale paid user acquisition funnels, optimize CAC-to-LTV ratios, and conduct rapid conversion experiments."
+  },
+  {
+    "id": "product-marketing-manager",
+    "title": "Product Marketing Manager (PMM)",
+    "field": "Marketing & Growth",
+    "requiredSkills": [
+      "Product Positioning",
+      "Go-to-Market Strategy",
+      "Competitive Analysis",
+      "Messaging",
+      "Sales Enablement"
+    ],
+    "preferredSkills": [
+      "Customer Persona Research",
+      "Case Studies",
+      "Launch Campaigns",
+      "Product Pricing"
+    ],
+    "description": "Define product value propositions, launch campaigns, create sales enablement decks, and analyze competitors."
+  },
+  {
+    "id": "content-marketing-manager",
+    "title": "Content Marketing Strategist",
+    "field": "Marketing & Growth",
+    "requiredSkills": [
+      "Content Writing",
+      "Copywriting",
+      "Editorial Calendar",
+      "Storytelling",
+      "SEO"
+    ],
+    "preferredSkills": [
+      "Blog Strategy",
+      "E-books / Whitepapers",
+      "Social Media Copy",
+      "WordPress",
+      "Editing"
+    ],
+    "description": "Author high-impact thought leadership articles, technical whitepapers, and customer success stories."
+  },
+  {
+    "id": "email-crm-marketer",
+    "title": "Email Marketing & CRM Automation Lead",
+    "field": "Marketing & Growth",
+    "requiredSkills": [
+      "Email Marketing",
+      "HubSpot",
+      "Customer Segmentation",
+      "Drip Campaigns",
+      "Deliverability"
+    ],
+    "preferredSkills": [
+      "Marketo",
+      "HTML Email Templates",
+      "A/B Testing",
+      "Retention Marketing",
+      "Lifecycle Marketing"
+    ],
+    "description": "Automate customer lifecycle email drip campaigns, segment lists, and maximize subscriber retention."
+  },
+  {
+    "id": "social-media-manager",
+    "title": "Social Media & Community Lead",
+    "field": "Marketing & Growth",
+    "requiredSkills": [
+      "Social Media Management",
+      "Community Engagement",
+      "Content Creation",
+      "LinkedIn Strategy",
+      "Twitter / X"
+    ],
+    "preferredSkills": [
+      "Video Reels",
+      "Influencer Partnerships",
+      "Brand Advocacy",
+      "Analytics Tracking"
+    ],
+    "description": "Grow organic community engagement, curate engaging social media narratives, and moderate developer forums."
+  },
+  {
+    "id": "marketing-analytics-manager",
+    "title": "Marketing Analytics & Attribution Manager",
+    "field": "Marketing & Growth",
+    "requiredSkills": [
+      "Google Analytics 4",
+      "Marketing Attribution",
+      "SQL",
+      "Data Visualization",
+      "Excel"
+    ],
+    "preferredSkills": [
+      "Tableau",
+      "Multi-Touch Attribution",
+      "Mixpanel",
+      "Python",
+      "Campaign ROI Reporting"
+    ],
+    "description": "Measure cross-channel marketing attribution, track lead progression through the funnel, and report ROI."
+  },
+  {
+    "id": "financial-analyst",
+    "title": "Corporate Financial Analyst",
+    "field": "Finance & Accounting",
+    "requiredSkills": [
+      "Financial Modeling",
+      "Excel",
+      "Budgeting",
+      "Financial Statement Analysis",
+      "Forecasting"
+    ],
+    "preferredSkills": [
+      "Variance Analysis",
+      "Power BI",
+      "SQL",
+      "DCF Valuation",
+      "GAAP Accounting"
+    ],
+    "description": "Build financial forecast models, analyze revenue variances, and evaluate capital investment opportunities."
+  },
+  {
+    "id": "investment-banking-analyst",
+    "title": "Investment Banking Analyst (M&A)",
+    "field": "Finance & Accounting",
+    "requiredSkills": [
+      "M&A Valuation",
+      "LBO Modeling",
+      "DCF Modeling",
+      "Pitch Books",
+      "Financial Analysis"
+    ],
+    "preferredSkills": [
+      "Comparable Companies Analysis",
+      "Due Diligence",
+      "CapIQ",
+      "Bloomberg Terminal",
+      "Excel"
+    ],
+    "description": "Conduct comprehensive valuation models, prepare pitch presentations, and assist in live M&A transactions."
+  },
+  {
+    "id": "corporate-accountant",
+    "title": "Senior Corporate Accountant",
+    "field": "Finance & Accounting",
+    "requiredSkills": [
+      "GAAP",
+      "General Ledger",
+      "Month-End Close",
+      "Account Reconciliations",
+      "Financial Reporting"
+    ],
+    "preferredSkills": [
+      "NetSuite",
+      "QuickBooks",
+      "Audit Support",
+      "Accounts Payable/Receivable",
+      "Tax Preparation"
+    ],
+    "description": "Manage month-end general ledger closing, balance sheet reconciliations, and compliance reporting."
+  },
+  {
+    "id": "fpa-manager",
+    "title": "Financial Planning & Analysis (FP&A) Manager",
+    "field": "Finance & Accounting",
+    "requiredSkills": [
+      "FP&A",
+      "Long-Range Planning",
+      "Corporate Budgeting",
+      "Financial Forecasting",
+      "Executive Reporting"
+    ],
+    "preferredSkills": [
+      "Hyperion",
+      "Adaptive Insights",
+      "Cash Flow Modeling",
+      "Scenario Analysis",
+      "Board Decks"
+    ],
+    "description": "Direct annual operating budget planning, driver-based revenue forecasts, and executive presentations."
+  },
+  {
+    "id": "risk-analyst-finance",
+    "title": "Financial Risk Management Analyst",
+    "field": "Finance & Accounting",
+    "requiredSkills": [
+      "Risk Assessment",
+      "Credit Risk",
+      "Market Risk",
+      "Financial Analysis",
+      "Statistical Modeling"
+    ],
+    "preferredSkills": [
+      "Value at Risk (VaR)",
+      "Stress Testing",
+      "Basel III",
+      "Python",
+      "Monte Carlo Simulation"
+    ],
+    "description": "Quantify market and credit exposure risks, stress-test portfolios, and design hedging strategies."
+  },
+  {
+    "id": "tax-consultant",
+    "title": "Tax Consultant & Compliance Specialist",
+    "field": "Finance & Accounting",
+    "requiredSkills": [
+      "Corporate Tax",
+      "Tax Compliance",
+      "Tax Provisions",
+      "IRS Regulations",
+      "Tax Planning"
+    ],
+    "preferredSkills": [
+      "CPA",
+      "State & Local Tax (SALT)",
+      "Transfer Pricing",
+      "Tax Provision Software",
+      "Research"
+    ],
+    "description": "Structure tax optimization strategies, file corporate returns, and ensure statutory compliance."
+  },
+  {
+    "id": "internal-auditor",
+    "title": "Internal Auditor & Controls Analyst",
+    "field": "Finance & Accounting",
+    "requiredSkills": [
+      "Internal Controls",
+      "SOX 404",
+      "Audit Procedures",
+      "Process Auditing",
+      "Risk Mitigation"
+    ],
+    "preferredSkills": [
+      "CIA Certification",
+      "Fraud Detection",
+      "Workpapers Documentation",
+      "Flowcharts"
+    ],
+    "description": "Audit corporate financial internal controls, identify operational deficiencies, and ensure SOX compliance."
+  },
+  {
+    "id": "treasury-analyst",
+    "title": "Treasury & Cash Management Analyst",
+    "field": "Finance & Accounting",
+    "requiredSkills": [
+      "Cash Forecasting",
+      "Liquidity Management",
+      "Bank Reconciliations",
+      "FX Hedging",
+      "Treasury Systems"
+    ],
+    "preferredSkills": [
+      "Kyriba",
+      "Working Capital Optimization",
+      "Debt Covenant Compliance",
+      "Wire Transfers"
+    ],
+    "description": "Oversee corporate daily liquidity positions, optimize working capital, and execute FX currency hedges."
+  },
+  {
+    "id": "sales-development-rep",
+    "title": "Sales Development Representative (SDR / BDR)",
+    "field": "Sales, HR & Operations",
+    "requiredSkills": [
+      "Cold Outbound",
+      "Lead Generation",
+      "Sales Prospecting",
+      "Salesforce",
+      "Cold Calling / Email"
+    ],
+    "preferredSkills": [
+      "Outreach.io",
+      "LinkedIn Sales Navigator",
+      "Pipeline Management",
+      "Discovery Calls",
+      "HubSpot"
+    ],
+    "description": "Prospect prospective enterprise leads, conduct qualification calls, and book pipeline demos."
+  },
+  {
+    "id": "account-executive-saas",
+    "title": "Enterprise Account Executive (SaaS)",
+    "field": "Sales, HR & Operations",
+    "requiredSkills": [
+      "Enterprise Sales",
+      "Negotiation",
+      "Contract Closing",
+      "Pipeline Forecasting",
+      "Solution Selling"
+    ],
+    "preferredSkills": [
+      "MEDDPICC",
+      "Salesforce",
+      "Executive Presentations",
+      "Complex Deal Structuring",
+      "Quota Attainment"
+    ],
+    "description": "Own multi-month enterprise software sales cycles, deliver executive pitches, and achieve quota."
+  },
+  {
+    "id": "technical-recruiter",
+    "title": "Technical Talent Recruiter",
+    "field": "Sales, HR & Operations",
+    "requiredSkills": [
+      "Technical Recruiting",
+      "Candidate Sourcing",
+      "Boolean Search",
+      "Screening",
+      "Interviewing"
+    ],
+    "preferredSkills": [
+      "LinkedIn Recruiter",
+      "Greenhouse",
+      "Lever",
+      "Offer Negotiation",
+      "Candidate Experience"
+    ],
+    "description": "Source, evaluate, and hire top software engineering, data science, and executive technical candidates."
+  },
+  {
+    "id": "hr-generalist",
+    "title": "Human Resources (HR) Generalist",
+    "field": "Sales, HR & Operations",
+    "requiredSkills": [
+      "Employee Relations",
+      "HR Policies",
+      "Onboarding",
+      "Benefits Administration",
+      "Labor Laws"
+    ],
+    "preferredSkills": [
+      "HRIS",
+      "Workday",
+      "BambooHR",
+      "Performance Management",
+      "Exit Interviews"
+    ],
+    "description": "Manage employee lifecycle onboarding, benefits coordination, workplace policies, and conflict resolution."
+  },
+  {
+    "id": "people-operations-manager",
+    "title": "People Operations & Culture Lead",
+    "field": "Sales, HR & Operations",
+    "requiredSkills": [
+      "People Operations",
+      "Culture Building",
+      "Employee Engagement",
+      "HR Strategy",
+      "Compensation"
+    ],
+    "preferredSkills": [
+      "L&D Programs",
+      "DEI Initiatives",
+      "Pulse Surveys",
+      "Retention Analysis",
+      "HR Compliance"
+    ],
+    "description": "Design workplace culture programs, career ladders, compensation benchmarks, and employee engagement surveys."
+  },
+  {
+    "id": "customer-success-manager",
+    "title": "Customer Success Manager (CSM)",
+    "field": "Sales, HR & Operations",
+    "requiredSkills": [
+      "Customer Retention",
+      "Relationship Management",
+      "Onboarding",
+      "Renewals",
+      "Upselling"
+    ],
+    "preferredSkills": [
+      "Gainsight",
+      "Salesforce",
+      "QBR Presentations",
+      "Customer Advocacy",
+      "Churn Mitigation"
+    ],
+    "description": "Guide high-value customers through implementation, conduct Quarterly Business Reviews, and maximize renewals."
+  },
+  {
+    "id": "supply-chain-analyst",
+    "title": "Supply Chain & Logistics Analyst",
+    "field": "Sales, HR & Operations",
+    "requiredSkills": [
+      "Supply Chain Management",
+      "Inventory Optimization",
+      "Data Analysis",
+      "Procurement",
+      "Logistics"
+    ],
+    "preferredSkills": [
+      "SAP ERP",
+      "Demand Planning",
+      "SQL",
+      "Vendor Negotiations",
+      "Excel Modeling"
+    ],
+    "description": "Forecast inventory demands, reduce shipping bottlenecks, and audit supplier fulfillment reliability."
+  },
+  {
+    "id": "operations-manager",
+    "title": "Business Operations Manager",
+    "field": "Sales, HR & Operations",
+    "requiredSkills": [
+      "Process Optimization",
+      "Operations Management",
+      "Vendor Management",
+      "Budgeting",
+      "Cross-Functional Execution"
+    ],
+    "preferredSkills": [
+      "Standard Operating Procedures (SOPs)",
+      "KPI Tracking",
+      "Cost Reduction",
+      "Project Management"
+    ],
+    "description": "Streamline company operational workflows, oversee vendor contracts, and drive operational efficiency."
+  },
+  {
+    "id": "sales-operations-analyst",
+    "title": "Sales Operations & Enablement Analyst",
+    "field": "Sales, HR & Operations",
+    "requiredSkills": [
+      "Salesforce Administration",
+      "Sales Analytics",
+      "Territory Planning",
+      "Commission Modeling",
+      "Excel"
+    ],
+    "preferredSkills": [
+      "HubSpot",
+      "Pipeline Forecasting",
+      "Data Cleansing",
+      "BI Dashboards",
+      "Sales Tooling"
+    ],
+    "description": "Administer CRM workflows, formulate sales incentive compensation, and produce pipeline forecasts."
   }
 ]

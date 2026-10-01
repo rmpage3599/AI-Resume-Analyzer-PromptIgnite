@@ -22,6 +22,7 @@ export interface ExperienceEntry {
 export interface JobRole {
   id: string;
   title: string;
+  field?: string;
   requiredSkills: string[];
   preferredSkills: string[];
   description: string;
@@ -51,6 +52,7 @@ export interface StarRewrite {
 export interface RoleRankingItem {
   jobRoleId: string;
   jobTitle: string;
+  field?: string;
   matchScore: number;
   semanticScore?: number;
   matchedSkillsCount: number;
@@ -60,6 +62,7 @@ export interface RoleRankingItem {
 }
 
 export interface MultiRoleComparison {
+  field?: string;
   totalRolesCompared: number;
   bestFitRole: string;
   bestFitScore: number;
@@ -70,6 +73,7 @@ export interface AnalysisResult {
   id: string;
   databaseBackend: "supabase" | "sqlite";
   candidate: CandidateInfo;
+  field?: string;
   skills: string[];
   education: EducationEntry[];
   experience: ExperienceEntry[];

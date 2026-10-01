@@ -132,14 +132,19 @@ def match_resume_with_custom_jd(
 def compare_multiple_roles(
     resume_skills: List[str],
     resume_text: str,
-    role_ids: Optional[List[str]] = None
+    role_ids: Optional[List[str]] = None,
+    field: Optional[str] = None
 ) -> Dict[str, Any]:
     """
-    Compare a single resume across multiple job roles simultaneously.
+    Compare a single resume across multiple job roles in the same field/domain.
     Returns a ranked leaderboard from highest match to lowest match.
     """
     all_jobs = load_jobs()
-    if role_ids:
+    if field:
+        target_jobs = [j for j in all_jobs if j.get("field") == field]
+        if not target_jobs:
+            target_jobs = all_jobs
+    elif role_ids:
         target_jobs = [j for j in all_jobs if j["id"] in role_ids]
     else:
         target_jobs = all_jobs
@@ -150,6 +155,7 @@ def compare_multiple_roles(
         rankings.append({
             "jobRoleId": job["id"],
             "jobTitle": job["title"],
+            "field": job.get("field", "General"),
             "matchScore": match_res["matchScore"],
             "semanticScore": match_res.get("semanticScore", 0),
             "matchedSkillsCount": len(match_res["matchedSkills"]),
@@ -162,9 +168,13 @@ def compare_multiple_roles(
     rankings.sort(key=lambda r: r["matchScore"], reverse=True)
 
     best_match = rankings[0] if rankings else None
+    resolved_field = field or (target_jobs[0].get("field") if target_jobs else "General")
+
     return {
+        "field": resolved_field,
         "totalRolesCompared": len(rankings),
         "bestFitRole": best_match["jobTitle"] if best_match else "N/A",
         "bestFitScore": best_match["matchScore"] if best_match else 0,
         "rankings": rankings
     }
+

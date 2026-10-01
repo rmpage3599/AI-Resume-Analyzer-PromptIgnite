@@ -34,9 +34,9 @@ const NAV_ITEMS: NavItem[] = [
   {
     id: "multi-role",
     label: "Multi-Role Benchmark",
-    sublabel: "12-Role Compatibility",
+    sublabel: "Field Fit Analysis",
     icon: TrophyIcon,
-    badge: "12 Roles",
+    badge: "Field Fit",
   },
   {
     id: "improvements",
