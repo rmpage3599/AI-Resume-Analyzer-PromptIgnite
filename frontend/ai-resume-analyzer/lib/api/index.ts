@@ -4,3 +4,4 @@ export * from "./client";
 export * from "./jobs";
 export * from "./resume";
 export * from "./health";
+export * from "./enhance";

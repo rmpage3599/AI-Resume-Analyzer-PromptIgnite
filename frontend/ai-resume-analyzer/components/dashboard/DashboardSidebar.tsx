@@ -1,12 +1,14 @@
 "use client";
 
 import type { ComponentType } from "react";
+import Link from "next/link";
 import {
   BarChartIcon,
   TrophyIcon,
   SparkIcon,
   TargetIcon,
   BriefcaseIcon,
+  ArrowRightIcon,
 } from "@/components/core/Icons";
 
 export type DashboardTab =
@@ -169,8 +171,19 @@ export default function DashboardSidebar({
           </nav>
         </div>
 
-        {/* Candidate Bottom Card */}
-        <div className="mt-6 border-t border-slate-100 pt-4">
+        {/* Enhance Resume Action & Candidate Card */}
+        <div className="mt-6 border-t border-slate-100 pt-4 space-y-3">
+          <Link
+            href="/enhance"
+            className="flex items-center justify-between rounded-xl bg-blue-50/80 px-3.5 py-2.5 text-xs font-semibold text-[#0d47a1] border border-blue-200/70 hover:bg-blue-100/90 transition shadow-xs"
+          >
+            <span className="flex items-center gap-2">
+              <SparkIcon className="h-3.5 w-3.5 text-[#0d47a1]" />
+              Enhance Resume
+            </span>
+            <ArrowRightIcon className="h-3.5 w-3.5" />
+          </Link>
+
           <div className="rounded-xl bg-slate-50/80 p-3 border border-slate-200/80">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">

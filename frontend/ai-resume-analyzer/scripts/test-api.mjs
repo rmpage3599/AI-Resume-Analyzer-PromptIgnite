@@ -7,7 +7,7 @@ import { dirname, resolve } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const BASE = process.env.BACKEND_URL || "http://127.0.0.1:8000";
+const BASE = process.env.BACKEND_URL || "http://localhost:8000";
 
 async function call(path, init) {
   const res = await fetch(BASE + path, init);

@@ -12,6 +12,7 @@ import StarRewritesPanel from "./StarRewritesPanel";
 import OverallAssessment from "./OverallAssessment";
 import MultiRoleSidebar from "./MultiRoleSidebar";
 import DashboardSidebar, { type DashboardTab } from "./DashboardSidebar";
+import EnhancementCard from "./EnhancementCard";
 import { ResultHeader } from "./ResultHeader";
 import type { AnalysisResult, JobRole } from "@/lib/types";
 
@@ -76,6 +77,8 @@ export default function ResultsDashboard({
                 <MatchedSkillsCard skills={result.matchedSkills} />
                 <MissingSkillsCard skills={result.missingSkills} />
               </div>
+
+              <EnhancementCard />
             </div>
           )}
 
@@ -98,6 +101,7 @@ export default function ResultsDashboard({
                   starRewrites={result.starRewrites}
                 />
               )}
+              <EnhancementCard />
             </div>
           )}
 
