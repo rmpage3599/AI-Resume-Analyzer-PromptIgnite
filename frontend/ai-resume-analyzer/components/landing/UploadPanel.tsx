@@ -3,18 +3,24 @@
 import { useCallback, useRef, useState, type DragEvent } from "react";
 import {
   CheckIcon,
-  FilePdfIcon,
+  FileTextIcon,
   UploadCloudIcon,
   XIcon,
 } from "@/components/core/Icons";
 import { ErrorNotice } from "@/components/ui/Notice";
-import { AnalysisError, validateResumeFile } from "@/lib/analyze";
+import {
+  ResumeValidationError,
+  acceptedExtensionsLabel,
+  validateResumeFile,
+} from "@/lib/validation";
+import { formatSize } from "@/lib/types";
+import { ACCEPTED_EXTENSIONS } from "@/lib/api/config";
 import { cn } from "@/lib/cn";
 
-function formatSize(bytes: number) {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+function fileExtLabel(name: string): string {
+  const dot = name.lastIndexOf(".");
+  if (dot < 0) return "FILE";
+  return name.slice(dot + 1).toUpperCase();
 }
 
 export interface UploadPanelProps {
@@ -36,18 +42,18 @@ export default function UploadPanel({
   const [dragActive, setDragActive] = useState(false);
 
   const handleFiles = useCallback(
-    async (files: FileList | null) => {
+    (files: FileList | null) => {
       if (!files || files.length === 0) return;
       const candidate = files[0];
       try {
-        await validateResumeFile(candidate);
+        validateResumeFile(candidate);
         onError(null);
         onFileSelected(candidate);
       } catch (err) {
-        if (err instanceof AnalysisError) {
+        if (err instanceof ResumeValidationError) {
           onError(err.message);
         } else {
-          onError("Please upload a PDF resume.");
+          onError("Please upload a valid resume.");
         }
       }
     },
@@ -73,22 +79,22 @@ export default function UploadPanel({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <span className="eyebrow eyebrow-azure">01 · Resume Upload</span>
+        <span className="label-eyebrow">Resume</span>
         {file && (
-          <span className="mono text-[10.5px] tracking-[0.16em] text-fg-3">
-            STEP COMPLETE
+          <span className="text-[11px] font-medium text-[#7890a4]">
+            Ready
           </span>
         )}
       </div>
 
       <div
         className={cn(
-          "relative overflow-hidden rounded-[10px] border bg-base/60 transition-all duration-200",
+          "relative overflow-hidden rounded-[14px] border bg-white/55 backdrop-blur-md transition-all",
           dragActive
-            ? "border-azure/55 bg-navy/15"
+            ? "border-[#0d47a1]/60 bg-[rgba(13,71,161,0.06)]"
             : file
-              ? "border-azure/25"
-              : "border-line hover:border-azure/25",
+              ? "border-[#90caf9]/55"
+              : "border-[rgba(13,71,161,0.14)] hover:border-[#90caf9]/55",
         )}
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
@@ -98,7 +104,7 @@ export default function UploadPanel({
           ref={inputRef}
           id="resume-file"
           type="file"
-          accept="application/pdf,.pdf"
+          accept={ACCEPTED_EXTENSIONS.join(",")}
           className="sr-only"
           onChange={(e) => handleFiles(e.target.files)}
           aria-describedby="resume-help"
@@ -114,32 +120,35 @@ export default function UploadPanel({
             }}
           />
         ) : (
-          <div className="has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-azure/60 has-[:focus-visible]:ring-offset-0 rounded-[10px] p-7 sm:p-8">
+          <div className="has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#0d47a1]/40 has-[:focus-visible]:ring-offset-0 rounded-[14px] px-6 py-8 sm:px-8 sm:py-10">
             <div className="flex flex-col items-center text-center">
               <span
                 className={cn(
-                  "mb-4 flex h-12 w-12 items-center justify-center rounded-[10px] border border-azure/30 bg-navy/20 text-azure transition-all duration-200",
-                  dragActive && "scale-[1.05] border-azure/60 bg-azure/15",
+                  "mb-4 flex h-12 w-12 items-center justify-center rounded-[12px] bg-[rgba(13,71,161,0.08)] text-[#0d47a1] transition-transform",
+                  dragActive && "scale-[1.05] bg-[rgba(13,71,161,0.14)]",
                 )}
               >
                 {dragActive ? (
                   <UploadCloudIcon className="h-6 w-6" />
                 ) : (
-                  <FilePdfIcon className="h-6 w-6" />
+                  <FileTextIcon className="h-6 w-6" />
                 )}
               </span>
-              <p className="text-[15.5px] font-medium text-fg">
-                Drop your resume here
+              <p className="text-[15.5px] font-medium text-[#0d2740]">
+                Upload your resume
               </p>
-              <p id="resume-help" className="mt-1.5 text-[12.5px] text-fg-3">
-                PDF files only · Maximum 10MB
+              <p
+                id="resume-help"
+                className="mt-1 text-[12.5px] text-[#7890a4]"
+              >
+                {acceptedExtensionsLabel()} only · Maximum 5MB
               </p>
               <label
                 htmlFor="resume-file"
                 onClick={(e) => e.stopPropagation()}
-                className="btn-ghost mt-5 cursor-pointer rounded-[8px] px-4 py-2 text-[13px] font-medium"
+                className="mt-5 cursor-pointer rounded-[10px] border border-[rgba(13,71,161,0.25)] bg-white/80 px-4 py-2 text-[13px] font-medium text-[#0d47a1] transition hover:bg-white hover:border-[rgba(13,71,161,0.45)]"
               >
-                Browse Resume
+                Choose PDF
               </label>
             </div>
           </div>
@@ -159,26 +168,26 @@ function SelectedFileRow({
   onClear: () => void;
 }) {
   return (
-    <div className="flex items-center gap-4 p-4 sm:px-5">
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[8px] border border-azure/35 bg-azure/10 text-azure">
+    <div className="flex min-w-0 items-center gap-3 px-4 py-3.5 sm:px-5">
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[rgba(13,71,161,0.08)] text-[#0d47a1]">
         <CheckIcon className="h-5 w-5" />
       </span>
       <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2.5">
-          <p className="truncate text-[14px] font-medium text-fg">
+        <div className="flex min-w-0 items-center gap-2">
+          <p className="min-w-0 truncate text-[14px] font-medium text-[#0d2740]">
             {file.name}
           </p>
-          <span className="chip">PDF</span>
+          <span className="chip chip-navy shrink-0">{fileExtLabel(file.name)}</span>
         </div>
-        <p className="mono mt-1 text-[11px] tracking-[0.12em] text-fg-3">
-          {formatSize(file.size)} · READY
+        <p className="mt-0.5 text-[12px] text-[#7890a4]">
+          {formatSize(file.size)}
         </p>
       </div>
       <button
         type="button"
         onClick={onClear}
         aria-label={`Remove ${file.name}`}
-        className="btn-ghost flex items-center gap-1.5 rounded-[7px] px-2.5 py-1.5 text-[12px]"
+        className="btn-ghost flex shrink-0 items-center gap-1.5 rounded-[8px] px-2.5 py-1.5 text-[12px]"
       >
         <XIcon className="h-3.5 w-3.5" />
         Remove

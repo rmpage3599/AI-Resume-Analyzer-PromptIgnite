@@ -1,23 +1,31 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { CheckIcon, ChevronDownIcon, TargetIcon } from "@/components/core/Icons";
-import { JOB_ROLES } from "@/lib/jobRoles";
-import type { JobRoleId } from "@/lib/types";
+import { CheckIcon, ChevronDownIcon } from "@/components/core/Icons";
+import type { JobRole } from "@/lib/types";
 import { cn } from "@/lib/cn";
 
 interface Props {
-  value: JobRoleId;
-  onChange: (id: JobRoleId) => void;
+  roles: JobRole[];
+  value: string;
+  onChange: (id: string) => void;
+  loading?: boolean;
+  disabled?: boolean;
 }
 
-export default function RoleSelect({ value, onChange }: Props) {
+export default function RoleSelect({
+  roles,
+  value,
+  onChange,
+  loading,
+  disabled,
+}: Props) {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const current = JOB_ROLES.find((r) => r.id === value) ?? JOB_ROLES[3];
+  const current = roles.find((r) => r.id === value) ?? roles[0];
 
   useEffect(() => {
     if (!open) return;
@@ -44,19 +52,26 @@ export default function RoleSelect({ value, onChange }: Props) {
     const buttons = listRef.current?.querySelectorAll<HTMLButtonElement>(
       "button[data-option]",
     );
-    if (!buttons) return;
+    if (!buttons || buttons.length === 0) return;
     const idx = (i + buttons.length) % buttons.length;
     buttons[idx].focus();
   };
+
+  if (!current) {
+    return (
+      <div className="rounded-[14px] border border-[rgba(13,71,161,0.14)] bg-white/55 px-4 py-3.5 backdrop-blur-md">
+        <p className="text-[13px] text-[#7890a4]">Loading job roles…</p>
+      </div>
+    );
+  }
 
   return (
     <div ref={containerRef} className="relative">
       <label
         id="role-label"
-        className="mb-2 flex items-center gap-2 text-[11.5px] font-medium uppercase tracking-[0.18em] text-fg-3"
+        className="label-eyebrow mb-2 block"
       >
-        <span className="h-px w-4 bg-azure/40" />
-        02 · Target Job Role
+        Target role
       </label>
       <button
         ref={buttonRef}
@@ -64,41 +79,42 @@ export default function RoleSelect({ value, onChange }: Props) {
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-labelledby="role-label role-value"
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => !disabled && setOpen((o) => !o)}
         onKeyDown={(e) => {
           if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
             e.preventDefault();
+            if (disabled) return;
             setOpen(true);
             requestAnimationFrame(() => focusIndex(0));
           }
         }}
+        disabled={disabled}
         className={cn(
-          "group relative flex w-full items-center justify-between gap-3 rounded-[10px] border bg-base/60 px-4 py-3 text-left transition-all duration-200",
-          open
-            ? "border-azure/50 bg-navy/10"
-            : "border-line hover:border-azure/30",
+          "group flex w-full items-center justify-between gap-3 rounded-[14px] border bg-white/55 px-4 py-3 text-left backdrop-blur-md transition-all",
+          disabled
+            ? "cursor-not-allowed opacity-60"
+            : open
+              ? "border-[#0d47a1]/55 bg-white/80"
+              : "border-[rgba(13,71,161,0.14)] hover:border-[#90caf9]/55",
         )}
       >
         <span className="flex min-w-0 items-center gap-3">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[7px] border border-azure/25 bg-navy/15 text-azure">
-            <TargetIcon className="h-4 w-4" />
-          </span>
           <span className="min-w-0">
             <span
               id="role-value"
-              className="block truncate text-[14.5px] font-medium text-fg"
+              className="block truncate text-[14.5px] font-medium text-[#0d2740]"
             >
-              {current.label}
+              {current.title}
             </span>
-            <span className="block truncate text-[11.5px] text-fg-3">
-              {current.descriptor}
+            <span className="mt-0.5 block truncate text-[12px] text-[#7890a4]">
+              {current.description}
             </span>
           </span>
         </span>
         <ChevronDownIcon
           className={cn(
-            "h-4 w-4 text-fg-3 transition-transform duration-200",
-            open && "rotate-180 text-azure",
+            "h-4 w-4 shrink-0 text-[#7890a4] transition-transform duration-200",
+            open && "rotate-180 text-[#0d47a1]",
           )}
         />
       </button>
@@ -108,9 +124,9 @@ export default function RoleSelect({ value, onChange }: Props) {
           ref={listRef}
           role="listbox"
           aria-labelledby="role-label"
-          className="absolute left-0 right-0 top-full z-30 mt-2 overflow-hidden rounded-[10px] border border-azure/25 bg-panel-hi shadow-[0_24px_60px_-24px_rgba(0,0,0,0.95)]"
+          className="absolute left-0 right-0 top-full z-30 mt-2 max-h-[340px] overflow-y-auto overflow-x-hidden rounded-[14px] border border-[rgba(13,71,161,0.14)] bg-white/95 p-1.5 shadow-[0_18px_45px_-18px_rgba(13,71,161,0.30)] backdrop-blur-xl"
         >
-          {JOB_ROLES.map((role, i) => {
+          {roles.map((role, i) => {
             const selected = role.id === value;
             return (
               <li key={role.id} role="option" aria-selected={selected}>
@@ -134,35 +150,26 @@ export default function RoleSelect({ value, onChange }: Props) {
                       focusIndex(0);
                     } else if (e.key === "End") {
                       e.preventDefault();
-                      focusIndex(JOB_ROLES.length - 1);
+                      focusIndex(roles.length - 1);
                     }
                   }}
                   className={cn(
-                    "relative flex w-full items-start gap-3 px-4 py-3 text-left transition-colors",
+                    "relative flex w-full items-start gap-3 rounded-[10px] px-3 py-2.5 text-left transition-colors",
                     selected
-                      ? "bg-navy/30"
-                      : "hover:bg-navy/15",
+                      ? "bg-[rgba(13,71,161,0.08)]"
+                      : "hover:bg-[rgba(13,71,161,0.05)]",
                   )}
                 >
-                  {selected && (
-                    <span
-                      aria-hidden
-                      className="absolute inset-y-2 left-0 w-[2px] rounded-full bg-azure"
-                    />
-                  )}
-                  <span className="mono mt-0.5 text-[10.5px] tracking-[0.16em] text-fg-3">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block text-[13.5px] font-medium text-fg">
-                      {role.label}
+                    <span className="block text-[13.5px] font-medium text-[#0d2740]">
+                      {role.title}
                     </span>
-                    <span className="block text-[11.5px] text-fg-3">
-                      {role.descriptor}
+                    <span className="mt-0.5 block text-[11.5px] leading-snug text-[#7890a4]">
+                      {role.description}
                     </span>
                   </span>
                   {selected && (
-                    <span className="mt-1 text-azure">
+                    <span className="mt-0.5 text-[#0d47a1]">
                       <CheckIcon className="h-3.5 w-3.5" />
                     </span>
                   )}

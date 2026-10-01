@@ -1,33 +1,42 @@
 import type { EducationEntry } from "@/lib/types";
 
-export default function EducationPanel({ education }: { education: EducationEntry[] }) {
-  if (education.length === 0) return null;
+export default function EducationPanel({
+  education,
+}: {
+  education: EducationEntry[];
+}) {
   return (
-    <article className="panel panel-hover h-full p-5 sm:p-6">
-      <span aria-hidden className="corner-accent tl" />
-      <span aria-hidden className="corner-accent br" />
+    <article className="glass flex h-full flex-col px-6 py-6">
+      <h2 className="text-[16px] font-semibold tracking-[-0.005em] text-[#0d2740]">
+        Education
+      </h2>
 
-      <span className="eyebrow eyebrow-azure">Education</span>
-
-      <div className="mt-4 space-y-4">
-        {education.map((edu, i) => (
-          <div key={`${edu.degree}-${edu.institution}-${i}`}>
-            <p className="text-[14px] font-semibold text-fg">{edu.degree}</p>
-            {edu.institution && (
-              <p className="mt-0.5 text-[12.5px] text-fg-2">
-                {edu.institution}
-              </p>
-            )}
-            <p className="mono mt-1 text-[10.5px] tracking-[0.16em] text-azure/80">
-              {edu.period}
-            </p>
-            {edu.detail && (
-              <p className="mt-2 text-[11.5px] leading-relaxed text-fg-3">
-                {edu.detail}
-              </p>
-            )}
-          </div>
-        ))}
+      <div className="mt-4 flex-1">
+        {education.length === 0 ? (
+          <p className="text-[13px] text-[#7890a4]">
+            No structured education details were extracted.
+          </p>
+        ) : (
+          <ul className="flex flex-col gap-4">
+            {education.map((edu, i) => (
+              <li key={`${edu.degree}-${i}`} className="min-w-0">
+                <p className="text-[14.5px] font-semibold text-[#0d2740]">
+                  {edu.degree}
+                </p>
+                {edu.institution && (
+                  <p className="mt-0.5 text-[13px] text-[#4f667a]">
+                    {edu.institution}
+                  </p>
+                )}
+                {edu.duration && (
+                  <p className="mt-1 text-[12px] text-[#7890a4]">
+                    {edu.duration}
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </article>
   );

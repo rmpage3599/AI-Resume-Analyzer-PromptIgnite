@@ -3,60 +3,47 @@
 import { CheckIcon } from "@/components/core/Icons";
 
 interface Props {
-  matched: string[];
-  totalRequired: number;
+  skills: string[];
+  totalRequired?: number;
 }
 
-export default function MatchedSkillsCard({ matched, totalRequired }: Props) {
-  const pct = Math.round((matched.length / Math.max(1, totalRequired)) * 100);
+export default function MatchedSkillsCard({ skills }: Props) {
   return (
-    <article className="panel panel-hover h-full p-5">
-      <header className="flex items-start justify-between gap-3">
-        <div>
-          <span className="eyebrow eyebrow-azure">Matched Skills</span>
-          <p className="mt-2 text-[14px] font-medium text-fg">
-            {matched.length} of {totalRequired} required skills present
-          </p>
-        </div>
-        <span className="mono flex h-9 min-w-9 items-center justify-center rounded-[7px] border border-azure/35 bg-azure/10 px-2 text-[12.5px] text-azure">
-          {matched.length}
+    <article className="glass flex h-full flex-col px-6 py-6">
+      <header className="flex items-baseline justify-between gap-3">
+        <h2 className="text-[16px] font-semibold tracking-[-0.005em] text-[#0d2740]">
+          Matched skills
+        </h2>
+        <span className="text-[12.5px] tabular-nums text-[#4f667a]">
+          {skills.length}
         </span>
       </header>
+      <p className="mt-1 text-[12.5px] text-[#4f667a]">
+        {skills.length} of required skills covered
+      </p>
 
-      <ul className="mt-4 space-y-2">
-        {matched.map((skill, i) => (
-          <li
-            key={skill}
-            className="anim-rise flex items-center gap-2.5 rounded-[7px] border border-line bg-base/40 px-3 py-2"
-            style={{ animationDelay: `${120 + i * 50}ms` }}
-          >
-            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-[5px] border border-azure/35 bg-azure/10 text-azure">
-              <CheckIcon className="h-3 w-3" />
-            </span>
-            <span className="truncate text-[13px] text-fg">{skill}</span>
-            <span className="ml-auto mono text-[10px] tracking-[0.16em] text-fg-3">
-              DETECTED
-            </span>
-          </li>
-        ))}
-      </ul>
-
-      <div className="mt-5">
-        <div className="flex items-center justify-between">
-          <span className="mono text-[10px] tracking-[0.18em] text-fg-3">
-            COVERAGE
-          </span>
-          <span className="mono text-[10.5px] text-azure/80">{pct}%</span>
-        </div>
-        <div className="mt-1.5 h-[3px] overflow-hidden rounded-full bg-line">
-          <span
-            className="block h-full grad-bar rounded-full transition-[width] duration-[1500ms] ease-out"
-            style={{
-              width: `${pct}%`,
-              transitionDelay: "400ms",
-            }}
-          />
-        </div>
+      <div className="mt-4 min-h-0 flex-1">
+        {skills.length === 0 ? (
+          <p className="text-[13px] leading-relaxed text-[#7890a4]">
+            No required skills matched for this role.
+          </p>
+        ) : (
+          <ul className="flex flex-col gap-1.5">
+            {skills.map((skill) => (
+              <li
+                key={skill}
+                className="flex min-w-0 items-center gap-2.5 rounded-[8px] bg-white/55 px-3 py-2"
+              >
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-[6px] bg-[rgba(13,71,161,0.10)] text-[#0d47a1]">
+                  <CheckIcon className="h-3 w-3" />
+                </span>
+                <span className="min-w-0 truncate text-[13px] text-[#0d2740]">
+                  {skill}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </article>
   );
